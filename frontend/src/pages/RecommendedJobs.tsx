@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import JobCard from "../components/JobCard";
 import { Sparkles, Loader2 } from "lucide-react";
 
+import { API_BASE_URL } from "../config";
+
 const RecommendedJobs: React.FC = () => {
   const [jobs, setJobs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -10,7 +12,7 @@ const RecommendedJobs: React.FC = () => {
     const fetchRecommended = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/jobs/recommended",
+          `${API_BASE_URL}/jobs/recommended`,
         );
         const data = await response.json();
 

@@ -32,6 +32,8 @@ interface HealthData {
   scraper_health: ScraperHealth[];
 }
 
+import { API_BASE_URL } from "../config";
+
 const SystemHealth: React.FC = () => {
   const [data, setData] = useState<HealthData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -39,7 +41,7 @@ const SystemHealth: React.FC = () => {
   useEffect(() => {
     const fetchHealth = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/system/health");
+        const response = await fetch(`${API_BASE_URL}/system/health`);
         const healthData = await response.json();
         setData(healthData);
       } catch (error) {

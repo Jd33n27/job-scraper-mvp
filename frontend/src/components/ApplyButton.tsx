@@ -3,6 +3,8 @@ import { Send, CheckCircle2, AlertCircle, Loader2, Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import ApplyModal from "./ApplyModal";
 
+import { API_BASE_URL } from "../config";
+
 interface ApplyButtonProps {
   jobId: number;
   applicationId?: number | null;
@@ -21,7 +23,7 @@ const ApplyButton: React.FC<ApplyButtonProps> = ({ jobId, applicationId }) => {
     setStatus("loading");
     try {
       const response = await fetch(
-        `http://localhost:8080/api/jobs/${jobId}/apply`,
+        `${API_BASE_URL}/jobs/${jobId}/apply`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

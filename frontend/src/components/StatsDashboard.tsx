@@ -13,6 +13,7 @@ import {
 } from "recharts";
 import { TrendingUp, Briefcase, CheckCircle, Building, Calendar, Award } from "lucide-react";
 import AdvancedStats from "./AdvancedStats";
+import { API_BASE_URL } from "../config";
 
 interface CompanyStat {
   company: string;
@@ -48,7 +49,7 @@ const StatsDashboard: React.FC = () => {
 
   const fetchStats = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/stats");
+      const response = await fetch(`${API_BASE_URL}/stats`);
       const data = await response.json();
       setStats(data);
     } catch (error) {

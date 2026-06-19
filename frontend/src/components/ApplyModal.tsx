@@ -19,6 +19,8 @@ interface ApplicationPreview {
   user_data: UserProfile;
 }
 
+import { API_BASE_URL } from "../config";
+
 interface ApplyModalProps {
   jobId: number;
   onClose: () => void;
@@ -34,7 +36,7 @@ const ApplyModal: React.FC<ApplyModalProps> = ({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/jobs/${jobId}/preview`)
+    fetch(`${API_BASE_URL}/jobs/${jobId}/preview`)
       .then((res) => res.json())
       .then((data) => {
         setPreview(data);

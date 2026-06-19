@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Briefcase, Calendar, Clock, ChevronRight, Filter } from "lucide-react";
 import { Link } from "react-router-dom";
 
+import { API_BASE_URL } from "../config";
+
 interface Application {
   id: number;
   job_id: number;
@@ -17,7 +19,7 @@ const Applications: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/applications")
+    fetch(`${API_BASE_URL}/applications`)
       .then((res) => res.json())
       .then((data) => {
         setApplications(data || []);

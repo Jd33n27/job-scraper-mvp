@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import SalaryDashboard from "../components/SalaryDashboard";
 import { BarChart3, TrendingUp } from "lucide-react";
+import { API_BASE_URL } from "../config";
 
 const MatchAnalytics: React.FC = () => {
   const [data, setData] = useState<any>(null);
@@ -21,16 +22,16 @@ const MatchAnalytics: React.FC = () => {
     const fetchStats = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/stats/matching",
+          `${API_BASE_URL}/stats/matching`,
         );
         const matchData = await response.json();
 
         // Fetch general stats for salary info
-        await fetch("http://localhost:8080/api/stats");
+        await fetch(`${API_BASE_URL}/stats`);
 
         // Fetch recommended jobs for scatter data
         const jobsResponse = await fetch(
-          "http://localhost:8080/api/jobs/recommended",
+          `${API_BASE_URL}/jobs/recommended`,
         );
         const jobs = await jobsResponse.json();
 

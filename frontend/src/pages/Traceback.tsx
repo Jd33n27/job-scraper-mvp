@@ -28,6 +28,8 @@ interface ApplicationTraceback {
   };
 }
 
+import { API_BASE_URL } from "../config";
+
 const Traceback: React.FC = () => {
   const { appId } = useParams();
   const [data, setData] = useState<ApplicationTraceback | null>(null);
@@ -35,7 +37,7 @@ const Traceback: React.FC = () => {
   const [resolving, setResolving] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/applications/${appId}`)
+    fetch(`${API_BASE_URL}/applications/${appId}`)
       .then((res) => res.json())
       .then((data) => {
         setData(data);
@@ -48,7 +50,7 @@ const Traceback: React.FC = () => {
     setResolving(true);
     try {
       const response = await fetch(
-        `http://localhost:8080/api/applications/${appId}/resolve`,
+        `${API_BASE_URL}/applications/${appId}/resolve`,
         {
           method: "PUT",
         },
@@ -56,7 +58,7 @@ const Traceback: React.FC = () => {
       if (response.ok) {
         // Refresh data
         const res = await fetch(
-          `http://localhost:8080/api/applications/${appId}`,
+          `${API_BASE_URL}/applications/${appId}`,
         );
         const newData = await res.json();
         setData(newData);
