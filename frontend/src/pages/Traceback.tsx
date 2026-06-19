@@ -82,8 +82,9 @@ const Traceback: React.FC = () => {
     return <div className="p-8 text-center">Application not found.</div>;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <Link
+    <div className="h-full overflow-y-auto p-4 md:p-6">
+      <div className="max-w-4xl mx-auto">
+        <Link
         to="/applications"
         className="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 font-medium mb-6 transition-colors group"
       >
@@ -307,6 +308,7 @@ const Traceback: React.FC = () => {
             {new Date(data.applied_at).toLocaleDateString()}.
           </p>
         </div>
+      </div>
       </div>
     </div>
   );
