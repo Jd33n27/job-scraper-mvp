@@ -21,39 +21,8 @@ services:
       - key: DATABASE_URL
         sync: false
       - key: SCRAPER_SERVICE_URL
-        fromService:
-          type: web
-          name: job-scrapper-scrapers
-          property: host
+        value: http://job-scrapper-scrapers:3001
       - key: DISCORD_WEBHOOK_URL
         sync: false
       - key: GEMINI_API_KEY
         sync: false
-
-  - type: cron
-    name: periodic-scrape
-    runtime: node
-    plan: free
-    schedule: "0 */6 * * *"
-    buildCommand: ""
-    startCommand: "curl -X POST $BACKEND_URL/api/scrape"
-    envVars:
-      - key: BACKEND_URL
-        fromService:
-          type: web
-          name: job-scrapper-backend
-          property: url
-
-  - type: web
-    name: job-scrapper-frontend
-    runtime: static
-    plan: free
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    rootDir: frontend
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          type: web
-          name: job-scrapper-backend
-          property: url
