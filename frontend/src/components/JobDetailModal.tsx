@@ -1,5 +1,5 @@
 import React from "react";
-import { X, MapPin, ExternalLink, Briefcase, CheckCircle2, AlertTriangle, HelpCircle } from "lucide-react";
+import { X, MapPin, ExternalLink, Briefcase, CheckCircle2 } from "lucide-react";
 import ApplyButton from "./ApplyButton";
 import SalaryDisplay from "./SalaryDisplay";
 

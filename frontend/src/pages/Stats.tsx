@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import StatsDashboard from "../components/StatsDashboard";
 import MatchAnalytics from "./MatchAnalytics";
 import SystemHealth from "./SystemHealth";
-import { BarChart3, LineChart, Activity } from "lucide-react";
+import { BarChart3 } from "lucide-react";
 
 const Stats: React.FC = () => {
   const [activeTab, setActiveTab] = useState<

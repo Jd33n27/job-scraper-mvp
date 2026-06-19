@@ -16,8 +16,6 @@ import {
   User,
   BarChart3,
   Sparkles,
-  LineChart,
-  Activity,
 } from "lucide-react";
 import "./App.css";
 
