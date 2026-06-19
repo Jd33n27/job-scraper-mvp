@@ -44,8 +44,8 @@ services:
           name: job-scrapper-backend
           property: url
 
-staticSites:
-  - name: job-scrapper-frontend
+  - type: static
+    name: job-scrapper-frontend
     plan: free
     buildCommand: npm install && npm run build
     publishPath: dist

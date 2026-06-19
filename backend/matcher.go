@@ -21,8 +21,8 @@ type MatchResult struct {
 
 func (h *Handler) CalculateMatch(job Job, profile CVProfile) MatchResult {
 	score := 0
-	var matchedSkills []string
-	var missingSkills []string
+	matchedSkills := []string{}
+	missingSkills := []string{}
 	details := ""
 
 	// 1. Skill Match (40%)

@@ -79,7 +79,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
 
       {job.match && (
         <div className="flex flex-wrap gap-2">
-          {job.match.matched_skills.slice(0, 5).map((skill) => (
+          {(job.match.matched_skills || []).slice(0, 5).map((skill) => (
             <span
               key={skill}
               className="flex items-center gap-1 px-2 py-0.5 bg-green-50 text-green-700 text-xs font-bold rounded-md border border-green-100"
@@ -88,7 +88,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
               {skill}
             </span>
           ))}
-          {job.match.missing_skills.slice(0, 3).map((skill) => (
+          {(job.match.missing_skills || []).slice(0, 3).map((skill) => (
             <span
               key={skill}
               className="px-2 py-0.5 bg-gray-50 text-gray-500 text-xs font-medium rounded-md border border-gray-100"
