@@ -61,11 +61,11 @@ const ApplyButton: React.FC<ApplyButtonProps> = ({ jobId, applicationId }) => {
           e.stopPropagation();
           if (applicationId) navigate(`/applications/${applicationId}`);
         }}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg font-semibold bg-green-50 text-green-700 hover:bg-green-100 transition-all border border-green-200"
+        className="mac-btn !text-green-800 bg-[#e2f0d9] border-[#a8d08d]"
       >
-        <CheckCircle2 className="w-4 h-4" />
+        <CheckCircle2 className="w-3 h-3 text-[#375623]" />
         Applied
-        <Eye className="w-3 h-3 ml-1 opacity-50" />
+        <Eye className="w-2.5 h-2.5 ml-1 opacity-55" />
       </button>
     );
   }
@@ -80,24 +80,18 @@ const ApplyButton: React.FC<ApplyButtonProps> = ({ jobId, applicationId }) => {
             setShowModal(true);
           }}
           disabled={status === "loading"}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all ${
-            status === "loading"
-              ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-              : status === "error"
-                ? "bg-red-50 text-red-600 hover:bg-red-100"
-                : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
+          className="mac-btn"
         >
           {status === "loading" ? (
-            <Loader2 className="w-4 h-4 animate-spin" />
+            <Loader2 className="w-3 h-3 animate-spin" />
           ) : (
-            <Send className="w-4 h-4" />
+            <Send className="w-3 h-3" />
           )}
           {status === "error" ? "Retry Apply" : "Auto Apply"}
         </button>
         {message && (
           <span
-            className={`text-[10px] flex items-center gap-1 ${status === "error" ? "text-red-500" : "text-green-600"}`}
+            className={`text-[9px] font-mono flex items-center gap-1 ${status === "error" ? "text-red-600 font-bold" : "text-green-700"}`}
           >
             {status === "error" && <AlertCircle className="w-2 h-2" />}
             {message}

@@ -1,5 +1,4 @@
 import React from "react";
-import JobCard from "./JobCard";
 import { RefreshCw } from "lucide-react";
 
 interface Job {
@@ -28,36 +27,64 @@ interface Job {
 interface JobListProps {
   jobs: Job[];
   loading: boolean;
+  onSelect: (job: Job) => void;
+  selectedJobId?: number | null;
 }
 
-const JobList: React.FC<JobListProps> = ({ jobs, loading }) => {
+const JobList: React.FC<JobListProps> = ({ jobs, loading, onSelect, selectedJobId }) => {
   if (loading) {
     return (
-      <div className="text-center py-12">
-        <RefreshCw className="w-8 h-8 animate-spin mx-auto text-blue-500 mb-2" />
-        <p className="text-gray-500">Loading jobs...</p>
+      <div className="flex items-center justify-center p-8 border border-gray-300 bg-white">
+        <RefreshCw className="w-4 h-4 animate-spin text-gray-600 mr-2" />
+        <span className="font-mono text-xs">Loading items...</span>
       </div>
     );
   }
 
   if (jobs.length === 0) {
     return (
-      <div className="text-center py-12 bg-white rounded-xl border border-dashed border-gray-300">
-        <p className="text-gray-500 text-lg">
-          No jobs found matching your filters.
-        </p>
-        <p className="text-gray-400">
-          Try scraping new jobs or adjusting your search.
-        </p>
+      <div className="p-8 border border-dashed border-gray-300 text-center bg-white font-mono text-xs text-gray-500">
+        No records found. Adjust index parameters.
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 gap-4">
-      {jobs.map((job) => (
-        <JobCard key={job.id} job={job} />
-      ))}
+    <div className="border border-gray-400 bg-white h-full overflow-auto panel-inset">
+      <table className="finder-table font-mono text-xs">
+        <thead>
+          <tr>
+            <th style={{ width: "60px" }}>Source</th>
+            <th>Job Title</th>
+            <th>Company</th>
+            <th style={{ width: "50px" }}>Match</th>
+            <th style={{ width: "60px" }}>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {jobs.map((job) => {
+            const score = job.match ? job.match.score : job.ai_score;
+            const dateStr = new Date(job.created_at).toLocaleDateString(undefined, {
+              month: "2-digit",
+              day: "2-digit",
+            });
+            const isSelected = selectedJobId === job.id;
+            return (
+              <tr
+                key={job.id}
+                onClick={() => onSelect(job)}
+                className={isSelected ? "selected" : ""}
+              >
+                <td title={job.source}>{job.source}</td>
+                <td className="font-bold" title={job.title}>{job.title}</td>
+                <td title={job.company}>{job.company}</td>
+                <td>{score > 0 ? `${score}%` : "-"}</td>
+                <td>{dateStr}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

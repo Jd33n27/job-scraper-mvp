@@ -4,7 +4,9 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"strings"
 	"sync"
 	"time"
 
@@ -338,4 +340,49 @@ func (h *Handler) GetApplicationTraceback(w http.ResponseWriter, r *http.Request
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(a)
+}
+
+func (h *Handler) ProxyJobPage(w http.ResponseWriter, r *http.Request) {
+	targetURL := r.URL.Query().Get("url")
+	if targetURL == "" {
+		http.Error(w, "URL parameter is required", http.StatusBadRequest)
+		return
+	}
+
+	// Fetch page
+	client := http.Client{Timeout: 10 * time.Second}
+	resp, err := client.Get(targetURL)
+	if err != nil {
+		http.Error(w, "Failed to fetch page: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer resp.Body.Close()
+
+	// Forward content type
+	contentType := resp.Header.Get("Content-Type")
+	if contentType != "" {
+		w.Header().Set("Content-Type", contentType)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	htmlContent := string(body)
+
+	// Inject HTML base tag so relative stylesheet/script/image links resolve from the original host
+	baseTag := fmt.Sprintf(`<base href="%s">`, targetURL)
+	if strings.Contains(htmlContent, "<head>") {
+		htmlContent = strings.Replace(htmlContent, "<head>", "<head>"+baseTag, 1)
+	} else {
+		htmlContent = baseTag + htmlContent
+	}
+
+	// Strip out any framing headers that might confuse the browser inside our iframe
+	w.Header().Del("X-Frame-Options")
+	w.Header().Del("Content-Security-Policy")
+
+	w.Write([]byte(htmlContent))
 }

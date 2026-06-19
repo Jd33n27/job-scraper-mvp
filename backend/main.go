@@ -209,6 +209,7 @@ func main() {
 		r.Get("/stats", h.GetStats)
 		r.Get("/stats/matching", h.GetMatchingStats)
 		r.Post("/scrape", h.ScrapeJobs)
+		r.Get("/scrape", h.ScrapeJobs)
 		r.Post("/cover-letter", h.GenerateCoverLetter)
 		r.Get("/jobs/{jobId}/preview", h.GetApplicationPreview)
 		r.Post("/jobs/{jobId}/apply", h.ApplyToJob)
@@ -223,6 +224,7 @@ func main() {
 		r.Post("/cv/upload", h.UploadCV)
 		r.Get("/cv/profile", h.GetCVProfile)
 		r.Put("/cv/profile", h.UpdateCVProfile)
+		r.Get("/proxy", h.ProxyJobPage)
 	})
 
 	fmt.Printf("Server starting on port %s...\n", cfg.Port)

@@ -37,61 +37,57 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gray-50 flex flex-col">
-        {/* Navigation Bar */}
-        <nav className="bg-white border-b border-gray-100 sticky top-0 z-40">
-          <div className="max-w-6xl mx-auto px-4 min-h-16 flex flex-wrap items-center justify-between py-2 md:py-0">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <Briefcase className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-black text-gray-900 tracking-tight">
-                JobScrapper
-              </span>
-            </Link>
+      <div className="h-screen flex flex-col bg-[#e4e4e4] overflow-hidden select-none">
+        {/* Apple style classic navigation bar */}
+        <nav className="bg-gradient-to-b from-[#ffffff] to-[#cccccc] border-b border-[#808080] h-8 flex items-center justify-between px-3 shrink-0">
+          <Link to="/" className="flex items-center gap-1.5 font-bold font-sans text-xs">
+            <Briefcase className="w-3.5 h-3.5 text-[#0a5fcf]" />
+            <span className="tracking-tight text-black font-extrabold uppercase">
+              JobScrapper v1.0
+            </span>
+          </Link>
 
-            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar">
-              <Link
-                to="/"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs md:text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors whitespace-nowrap"
-              >
-                <Search className="w-4 h-4" />
-                Jobs
-              </Link>
-              <Link
-                to="/recommended"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs md:text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors whitespace-nowrap"
-              >
-                <Sparkles className="w-4 h-4" />
-                For You
-              </Link>
-              <Link
-                to="/applications"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs md:text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors whitespace-nowrap"
-              >
-                <History className="w-4 h-4" />
-                History
-              </Link>
-              <Link
-                to="/stats"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs md:text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors whitespace-nowrap"
-              >
-                <BarChart3 className="w-4 h-4" />
-                Dashboard
-              </Link>
-              <button
-                onClick={() => setShowProfile(true)}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs md:text-sm font-bold text-gray-600 hover:bg-gray-50 transition-colors whitespace-nowrap"
-              >
-                <User className="w-4 h-4" />
-                Profile
-              </button>
-            </div>
+          <div className="flex items-center h-full">
+            <Link
+              to="/"
+              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+            >
+              <Search className="w-3 h-3 mr-1" />
+              Jobs
+            </Link>
+            <Link
+              to="/recommended"
+              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+            >
+              <Sparkles className="w-3 h-3 mr-1" />
+              For You
+            </Link>
+            <Link
+              to="/applications"
+              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+            >
+              <History className="w-3 h-3 mr-1" />
+              History
+            </Link>
+            <Link
+              to="/stats"
+              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-r border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+            >
+              <BarChart3 className="w-3 h-3 mr-1" />
+              Stats
+            </Link>
+            <button
+              onClick={() => setShowProfile(true)}
+              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black hover:bg-[#dbe7f9] hover:text-black transition-colors border-r border-[#b5b5b5] cursor-pointer bg-transparent border-0 outline-none"
+            >
+              <User className="w-3 h-3 mr-1" />
+              Profile
+            </button>
           </div>
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1">
+        <main className="flex-1 overflow-hidden relative">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/recommended" element={<RecommendedJobs />} />
@@ -103,9 +99,13 @@ function App() {
           </Routes>
         </main>
 
-        <footer className="py-8 text-center text-gray-400 text-sm border-t border-gray-100 bg-white">
-          &copy; 2026 JobScrapper &bull; Empowering your career with
-          transparency.
+        {/* Classic system status bar */}
+        <footer className="h-6 bg-[#cccccc] border-t border-[#808080] flex items-center justify-between px-3 text-[10px] font-mono text-gray-700 shrink-0 select-none">
+          <div>&copy; 2026 JobScrapper &bull; Retro Job Dashboard</div>
+          <div className="flex items-center gap-3">
+            <span>Status: Connected</span>
+            <span>Index: Supabase SQL DB</span>
+          </div>
         </footer>
 
         {showProfile && (
