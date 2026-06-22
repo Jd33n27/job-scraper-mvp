@@ -43,7 +43,7 @@ const JobList: React.FC<JobListProps> = ({ jobs, loading, onSelect, selectedJobI
 
   if (jobs.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center h-full py-12 px-6 border border-dashed border-brand-border rounded-2xl bg-brand-cream/30 text-center">
+      <div className="flex flex-col items-center justify-center h-full py-12 px-6 border-b border-brand-border text-center">
         <span className="text-xs text-brand-muted-text font-medium">
           No records found. Adjust filter criteria.
         </span>
@@ -52,7 +52,7 @@ const JobList: React.FC<JobListProps> = ({ jobs, loading, onSelect, selectedJobI
   }
 
   return (
-    <div className="h-full overflow-y-auto flex flex-col gap-3 pr-1.5 no-scrollbar">
+    <div className="h-full overflow-y-auto flex flex-col pr-1.5 no-scrollbar">
       {jobs.map((job) => {
         const score = job.match ? job.match.score : job.ai_score;
         const isSelected = selectedJobId === job.id;
@@ -71,10 +71,10 @@ const JobList: React.FC<JobListProps> = ({ jobs, loading, onSelect, selectedJobI
           <div
             key={job.id}
             onClick={() => onSelect(job)}
-            className={`job-item flex items-center justify-between gap-4 border text-left p-3.5 transition-all duration-200 cursor-pointer ${
+            className={`flex items-center justify-between gap-4 text-left py-4.5 px-2 border-b transition-all duration-200 cursor-pointer ${
               isSelected 
-                ? "bg-brand-sage/60 border-brand-forest shadow-sm ring-1 ring-brand-forest" 
-                : "bg-white border-brand-border hover:border-brand-terracotta hover:bg-brand-cream/40"
+                ? "bg-brand-sage/50 border-brand-forest" 
+                : "border-brand-border/60 hover:bg-brand-sage/20"
             }`}
           >
             <div className="flex flex-col gap-1 min-w-0">
@@ -90,7 +90,7 @@ const JobList: React.FC<JobListProps> = ({ jobs, loading, onSelect, selectedJobI
                 </span>
               </div>
               
-              <h4 className="font-serif font-black text-brand-forest text-xs leading-snug truncate mt-0.5" title={job.title}>
+              <h4 className="font-serif font-black text-brand-forest text-xs leading-snug truncate mt-1" title={job.title}>
                 {job.title}
               </h4>
               

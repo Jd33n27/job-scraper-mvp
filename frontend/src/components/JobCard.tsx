@@ -36,7 +36,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 flex flex-col gap-5">
+    <div className="py-6 border-b border-brand-border flex flex-col gap-4">
       <div className="flex flex-col md:flex-row justify-between items-start gap-4">
         <div className="flex-1 space-y-2">
           <div className="flex items-center gap-3">
@@ -100,7 +100,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
       )}
 
       {job.ai_reasoning && (
-        <div className="bg-brand-cream/40 p-4 rounded-xl border border-brand-border/60 relative overflow-hidden group">
+        <div className="py-3 border-t border-b border-brand-border/40 relative overflow-hidden group">
           <div className="absolute left-0 top-0 w-1 h-full bg-brand-terracotta/25 group-hover:bg-brand-terracotta transition-colors" />
           <p className="text-xs text-brand-muted-text leading-relaxed italic pl-2">
             <span className="font-bold text-brand-forest not-italic mr-2 text-[10px] tracking-wider uppercase font-sans">
@@ -111,7 +111,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
         </div>
       )}
 
-      <div className="flex items-center justify-between pt-2.5 mt-auto border-t border-brand-border/60">
+      <div className="flex items-center justify-between pt-2">
         <div className="flex items-center gap-4">
           <button
             onClick={() => setIsModalOpen(true)}

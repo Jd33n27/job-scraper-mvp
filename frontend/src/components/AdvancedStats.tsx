@@ -27,9 +27,9 @@ const COLORS = ["#1A3026", "#C86A51", "#4A5F56", "#E8EFE9", "#DCD5CB"];
 
 const AdvancedStats: React.FC<AdvancedStatsProps> = ({ bySource, byLocation }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
       {/* Jobs by Source */}
-      <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
+      <div className="py-2">
         <h3 className="text-base font-serif font-black text-brand-forest mb-6">Jobs by Source</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -62,7 +62,7 @@ const AdvancedStats: React.FC<AdvancedStatsProps> = ({ bySource, byLocation }) =
       </div>
 
       {/* Jobs by Location Group */}
-      <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
+      <div className="py-2">
         <h3 className="text-base font-serif font-black text-brand-forest mb-6">Location Breakdown</h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">

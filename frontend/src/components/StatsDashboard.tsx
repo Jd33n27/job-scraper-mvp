@@ -83,10 +83,10 @@ const StatsDashboard: React.FC = () => {
   const COLORS = ["#1A3026", "#C86A51", "#4A5F56", "#E8EFE9", "#DCD5CB"];
 
   return (
-    <div className="space-y-6 pb-12">
-      {/* Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+    <div className="space-y-8 pb-12">
+      {/* Metrics Row (Flat dividers, no card backgrounds) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 border-b border-brand-border/60 pb-8">
+        <div className="flex items-center gap-4 py-2">
           <div className="w-12 h-12 bg-brand-sage rounded-xl flex items-center justify-center text-brand-forest flex-shrink-0 border border-brand-border/40">
             <Briefcase className="w-5 h-5" />
           </div>
@@ -96,7 +96,7 @@ const StatsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+        <div className="flex items-center gap-4 py-2">
           <div className="w-12 h-12 bg-brand-cream rounded-xl flex items-center justify-center text-brand-terracotta flex-shrink-0 border border-brand-border/40">
             <Calendar className="w-5 h-5" />
           </div>
@@ -106,7 +106,7 @@ const StatsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+        <div className="flex items-center gap-4 py-2">
           <div className="w-12 h-12 bg-[#EBF7EE] rounded-xl flex items-center justify-center text-[#1E5D2F] flex-shrink-0 border border-[#C5ECD0]/40">
             <CheckCircle className="w-5 h-5" />
           </div>
@@ -116,7 +116,7 @@ const StatsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+        <div className="flex items-center gap-4 py-2">
           <div className="w-12 h-12 bg-[#FFF9E6] rounded-xl flex items-center justify-center text-[#B06000] flex-shrink-0 border border-[#FCE8B2]/40">
             <Award className="w-5 h-5" />
           </div>
@@ -126,7 +126,7 @@ const StatsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+        <div className="flex items-center gap-4 py-2">
           <div className="w-12 h-12 bg-[#FDF2ED] rounded-xl flex items-center justify-center text-[#A64115] flex-shrink-0 border border-[#FAD6C5]/40">
             <TrendingUp className="w-5 h-5" />
           </div>
@@ -137,9 +137,9 @@ const StatsDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Daily Trends (Line Charts) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
+      {/* Daily Trends (Line Charts, Flat Layout) */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 border-b border-brand-border/60 pb-8">
+        <div className="py-2">
           <div className="flex items-center gap-2 mb-6">
             <TrendingUp className="w-4 h-4 text-brand-terracotta" />
             <h3 className="text-base font-serif font-black text-brand-forest">Jobs Scraped (7 Days)</h3>
@@ -157,7 +157,7 @@ const StatsDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
+        <div className="py-2">
           <div className="flex items-center gap-2 mb-6">
             <CheckCircle className="w-4 h-4 text-[#1E5D2F]" />
             <h3 className="text-base font-serif font-black text-brand-forest">Applications Submitted (7 Days)</h3>
@@ -176,8 +176,8 @@ const StatsDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Chart Section */}
-      <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
+      {/* Top Companies (Flat Layout) */}
+      <div className="py-2 border-b border-brand-border/60 pb-8">
         <div className="flex items-center gap-2 mb-6">
           <Building className="w-4 h-4 text-brand-muted-text" />
           <h3 className="text-base font-serif font-black text-brand-forest">Top Companies</h3>

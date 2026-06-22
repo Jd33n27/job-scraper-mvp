@@ -22,107 +22,94 @@ body {
   font-family: var(--font-sans);
   background-color: var(--brand-cream);
   color: var(--brand-dark-text);
-  overflow: hidden;
+  overflow-y: auto;
   font-size: 13px;
   line-height: 1.5;
 }
 
-/* Organic Custom Scrollbars */
+/* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--brand-cream);
-  border-radius: 8px;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--brand-border);
-  border-radius: 8px;
-  border: 2px solid var(--brand-cream);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--brand-muted-text);
 }
 
-/* Bento Card Panels */
+/* Flat layout list container styles (completely cardless) */
 .bento-panel {
-  background-color: var(--brand-panel-light);
-  border: 1px solid var(--brand-border);
-  border-radius: 20px;
-  padding: 1.25rem;
-  box-shadow: 0 4px 20px rgba(26, 48, 38, 0.03);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem 0;
+  box-shadow: none;
+  transition: none;
 }
 .bento-panel:hover {
-  box-shadow: 0 8px 30px rgba(26, 48, 38, 0.06);
-  transform: translateY(-2px);
+  box-shadow: none;
+  transform: none;
 }
 
 .bento-panel-dark {
   background-color: var(--brand-forest);
-  border: 1px solid var(--brand-border-dark);
+  border-radius: 16px;
+  padding: 1.5rem;
   color: var(--brand-light-text);
-  border-radius: 20px;
-  padding: 1.25rem;
-  box-shadow: 0 10px 30px rgba(26, 48, 38, 0.15);
 }
 
-/* Modern inputs replacing the retro look */
+/* Input Fields (Clean & Flat) */
 input[type="text"], select, textarea {
   border: 1px solid var(--brand-border);
   background: #ffffff;
   color: var(--brand-dark-text);
-  padding: 8px 14px;
+  padding: 8px 12px;
   font-family: var(--font-sans);
   font-size: 12px;
-  border-radius: 12px;
+  border-radius: 8px;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(26, 48, 38, 0.02);
 }
 input[type="text"]:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--brand-terracotta);
-  box-shadow: 0 0 0 3px rgba(200, 106, 81, 0.15);
+  box-shadow: 0 0 0 2px rgba(200, 106, 81, 0.1);
 }
 
-/* Custom Checkbox */
+/* Checkbox */
 input[type="checkbox"] {
   accent-color: var(--brand-terracotta);
   cursor: pointer;
 }
 
-/* Organic Bento Buttons */
+/* Buttons */
 .bento-btn, .mac-btn {
   background-color: var(--brand-terracotta);
-  border: 1px solid transparent;
+  border: none;
   color: var(--brand-light-text) !important;
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
   padding: 8px 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
   text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(200, 106, 81, 0.2);
+  transition: all 0.2s ease;
 }
 .bento-btn:hover, .mac-btn:hover {
   background-color: var(--brand-terracotta-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(200, 106, 81, 0.3);
-}
-.bento-btn:active, .mac-btn:active {
-  transform: translateY(1px);
 }
 .bento-btn:disabled, .mac-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
 
 .bento-btn-secondary {
@@ -132,48 +119,28 @@ input[type="checkbox"] {
 }
 .bento-btn-secondary:hover {
   background-color: var(--brand-sage);
-  border-color: var(--brand-border);
-  box-shadow: none;
-  transform: translateY(-1px);
 }
 
-/* Catalog/List View Styles replacing retro table */
+/* Job list items - flat rows with clean borders, no cards */
 .job-item {
-  border: 1px solid var(--brand-border);
-  background-color: #ffffff;
-  border-radius: 16px;
-  padding: 12px 16px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  border-bottom: 1px solid var(--brand-border);
+  background-color: transparent;
+  border-radius: 0;
+  padding: 14px 4px;
+  transition: all 0.2s ease;
   cursor: pointer;
 }
 .job-item:hover {
-  border-color: var(--brand-terracotta);
   background-color: var(--brand-sage);
 }
 .job-item.selected {
-  border-color: var(--brand-forest);
   background-color: var(--brand-sage);
-  box-shadow: 0 0 0 2px var(--brand-forest);
+  border-bottom-color: var(--brand-forest);
 }
 
-/* Panel Containers */
 .panel-inset, .panel-outset {
   border: none;
   box-shadow: none;
   background: transparent;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.animate-fade-in {
-  animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

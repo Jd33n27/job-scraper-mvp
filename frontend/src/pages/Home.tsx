@@ -122,9 +122,9 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-brand-cream overflow-hidden p-6 font-sans">
-      {/* Bio-Organic Bento Filtering Toolbar */}
-      <div className="bento-panel flex flex-col md:flex-row justify-between items-center gap-4 mb-5 select-none shrink-0">
+    <div className="h-full flex flex-col bg-brand-cream overflow-y-auto lg:overflow-hidden p-4 sm:p-6 font-sans">
+      {/* Dynamic Filter Row (Border Divider, Flat Style) */}
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-6 pb-6 border-b border-brand-border select-none shrink-0">
         <div className="flex items-center gap-3 w-full md:w-auto">
           <span className="font-sans text-xs font-bold text-brand-forest uppercase tracking-wider">
             Filters:
@@ -139,19 +139,19 @@ const Home: React.FC = () => {
           className="bento-btn shrink-0"
         >
           <RefreshCw className={`w-3.5 h-3.5 ${scraping ? "animate-spin" : ""}`} />
-          {scraping ? "Scraping Pages..." : "Re-Index Sources"}
+          {scraping ? "Scraping..." : "Re-Index Sources"}
         </button>
       </div>
 
-      {/* Main Split Window */}
-      <div className="flex-1 grid grid-cols-12 gap-6 min-h-0 overflow-hidden">
-        {/* Left Column (33%): Job Catalog (Finder list) */}
-        <div className="col-span-4 h-full flex flex-col overflow-hidden min-w-0">
+      {/* Responsive Grid Layout (Full width columns on mobile, 3-column layout on desktop) */}
+      <div className="flex-1 grid grid-cols-12 gap-6 min-h-0 overflow-y-auto lg:overflow-hidden">
+        {/* Left Column: Job List Catalog */}
+        <div className="col-span-12 lg:col-span-4 h-[350px] lg:h-full flex flex-col overflow-hidden min-w-0">
           <div className="font-serif text-sm font-bold text-brand-forest mb-2 flex items-center justify-between select-none">
             <span>Active Catalog</span>
             <span className="font-mono text-xs text-brand-muted-text font-bold bg-brand-sage px-2 py-0.5 rounded-full">{jobs.length} Jobs</span>
           </div>
-          <div className="flex-1 overflow-hidden min-h-0 bento-panel bg-white/70 backdrop-blur-md p-4">
+          <div className="flex-1 overflow-hidden min-h-0 py-1">
             <JobList
               jobs={jobs}
               loading={loading}
@@ -161,17 +161,17 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* Middle Column (33%): AI Analyzer & Workspace */}
-        <div className="col-span-4 h-full flex flex-col overflow-hidden min-w-0">
+        {/* Middle Column: Detail Analytics Workspace */}
+        <div className="col-span-12 lg:col-span-4 h-fit lg:h-full flex flex-col overflow-hidden min-w-0">
           <div className="font-serif text-sm font-bold text-brand-forest mb-2 select-none">
             <span>Workspace &amp; Analysis</span>
           </div>
-          <div className="flex-1 bento-panel bg-white/70 backdrop-blur-md p-5 overflow-y-auto flex flex-col gap-4 min-h-0">
+          <div className="flex-1 py-1 overflow-y-auto flex flex-col gap-4 min-h-0">
             {selectedJob ? (
               <>
                 {/* Title Card */}
                 <div className="border-b border-brand-border pb-3">
-                  <span className="text-[10px] uppercase font-bold text-brand-terracotta font-mono tracking-widest bg-brand-cream px-2 py-0.5 rounded-full border border-brand-border">
+                  <span className="text-[10px] uppercase font-bold text-brand-terracotta font-mono tracking-widest bg-brand-cream px-2 py-0.5 rounded border border-brand-border">
                     {selectedJob.source}
                   </span>
                   <h3 className="text-base font-serif font-black text-brand-forest leading-snug mt-2">
@@ -181,32 +181,32 @@ const Home: React.FC = () => {
                     {selectedJob.company} &bull; {selectedJob.location || "Remote"}
                   </div>
                   {selectedJob.salary_min && (
-                    <div className="text-xs text-brand-terracotta font-mono mt-2 font-bold bg-brand-cream/80 px-2 py-0.5 rounded border border-brand-border/60 w-fit">
+                    <div className="text-xs text-brand-terracotta font-mono mt-2 font-bold bg-brand-cream/80 px-2 py-0.5 rounded border border-brand-border/65 w-fit">
                       Est. Salary: ${selectedJob.salary_min}k - ${selectedJob.salary_max}k
                     </div>
                   )}
                 </div>
 
                 {/* AI Alignment Score */}
-                <div className="border border-brand-border bg-brand-cream/50 rounded-xl p-3.5">
-                  <div className="flex items-center justify-between">
+                <div className="py-3 border-b border-brand-border">
+                  <div className="flex items-center justify-between mb-2">
                     <span className="font-sans text-[11px] font-bold text-brand-forest uppercase tracking-wider">
                       AI Alignment Index
                     </span>
-                    <span className="font-mono text-xs font-black text-brand-terracotta bg-brand-sage px-2 py-0.5 rounded-lg border border-brand-border">
+                    <span className="font-mono text-xs font-black text-brand-terracotta bg-brand-sage px-2 py-0.5 rounded border border-brand-border">
                       {selectedJob.match ? selectedJob.match.score : selectedJob.ai_score}%
                     </span>
                   </div>
                   {selectedJob.ai_reasoning && (
-                    <div className="mt-2.5 font-sans text-xs leading-relaxed text-brand-muted-text bg-white p-3 rounded-lg border border-brand-border">
+                    <div className="font-sans text-xs leading-relaxed text-brand-muted-text bg-white p-3 rounded-lg border border-brand-border">
                       {selectedJob.ai_reasoning}
                     </div>
                   )}
                 </div>
 
-                {/* Skills Analysis */}
+                {/* Skills Matrix */}
                 {selectedJob.match && (
-                  <div className="border border-brand-border bg-white rounded-xl p-3.5">
+                  <div className="py-3 border-b border-brand-border">
                     <div className="font-sans text-[10px] font-bold text-brand-forest uppercase tracking-wider mb-2">
                       CV Match Matrix
                     </div>
@@ -215,7 +215,7 @@ const Home: React.FC = () => {
                         {(selectedJob.match.matched_skills || []).map((skill) => (
                           <span
                             key={skill}
-                            className="bg-[#EBF7EE] border border-[#C5ECD0] text-[#1E5D2F] px-2 py-0.5 rounded-md text-[10px] font-sans font-bold"
+                            className="bg-[#EBF7EE] border border-[#C5ECD0] text-[#1E5D2F] px-2 py-0.5 rounded text-[10px] font-sans font-bold"
                           >
                             ✓ {skill}
                           </span>
@@ -225,7 +225,7 @@ const Home: React.FC = () => {
                         {(selectedJob.match.missing_skills || []).map((skill) => (
                           <span
                             key={skill}
-                            className="bg-[#FDF2ED] border border-[#FAD6C5] text-[#A64115] px-2 py-0.5 rounded-md text-[10px] font-sans font-bold"
+                            className="bg-[#FDF2ED] border border-[#FAD6C5] text-[#A64115] px-2 py-0.5 rounded text-[10px] font-sans font-bold"
                           >
                             ✗ {skill}
                           </span>
@@ -235,10 +235,10 @@ const Home: React.FC = () => {
                   </div>
                 )}
 
-                {/* Action Triggers */}
-                <div className="border border-brand-border bg-brand-panel-light/40 rounded-xl p-3 flex flex-wrap gap-2 items-center justify-between">
+                {/* Action Options */}
+                <div className="py-3 border-b border-brand-border flex flex-wrap gap-2 items-center justify-between">
                   <span className="font-sans text-[10px] font-bold text-brand-forest uppercase tracking-wider">
-                    Portal Options
+                    Portal Actions
                   </span>
                   <div className="flex gap-2 items-center">
                     <a
@@ -259,8 +259,8 @@ const Home: React.FC = () => {
                   </div>
                 </div>
 
-                {/* AI Cover Letter Assistant */}
-                <div className="border border-brand-border rounded-xl p-3 bg-white mt-auto">
+                {/* AI Cover Letter Builder */}
+                <div className="py-3 mt-auto">
                   <div className="flex justify-between items-center mb-2">
                     <span className="font-sans text-[10px] font-bold text-brand-forest uppercase tracking-wider flex items-center gap-1.5">
                       <FileText className="w-3.5 h-3.5 text-brand-forest" />
@@ -313,7 +313,7 @@ const Home: React.FC = () => {
                 </div>
               </>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center text-center text-brand-muted-text font-sans text-xs">
+              <div className="flex-1 flex flex-col items-center justify-center text-center text-brand-muted-text font-sans text-xs py-12">
                 <FileText className="w-8 h-8 text-brand-border mb-3" />
                 Select job item from the catalog.
               </div>
@@ -321,8 +321,8 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column (34%): Portal (Job form view) */}
-        <div className="col-span-4 h-full flex flex-col overflow-hidden min-w-0">
+        {/* Right Column: Portal Integration Webview */}
+        <div className="col-span-12 lg:col-span-4 h-[400px] lg:h-full flex flex-col overflow-hidden min-w-0">
           <div className="font-serif text-sm font-bold text-brand-forest mb-2 flex items-center justify-between select-none">
             <span>Embedded Portal</span>
             {selectedJob && (
@@ -331,7 +331,7 @@ const Home: React.FC = () => {
               </span>
             )}
           </div>
-          <div className="flex-1 bento-panel bg-white overflow-hidden relative p-0 border border-brand-border shadow-sm">
+          <div className="flex-1 bg-white overflow-hidden relative border border-brand-border rounded-xl shadow-sm">
             {selectedJob ? (
               <iframe
                 src={`${API_BASE_URL}/proxy?url=${encodeURIComponent(selectedJob.url)}`}

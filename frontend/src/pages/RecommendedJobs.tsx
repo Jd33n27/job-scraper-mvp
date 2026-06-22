@@ -64,7 +64,7 @@ const RecommendedJobs: React.FC = () => {
         </div>
 
         {jobs.length === 0 ? (
-          <div className="bento-panel bg-white/70 backdrop-blur-md p-16 text-center space-y-6">
+          <div className="py-16 text-center space-y-6 border-b border-brand-border/60">
             <div className="w-20 h-20 bg-brand-sage text-brand-terracotta rounded-full flex items-center justify-center mx-auto border border-brand-border">
               <Sparkles className="w-10 h-10" />
             </div>
@@ -87,7 +87,7 @@ const RecommendedJobs: React.FC = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-6">
+          <div className="grid grid-cols-1">
             {jobs.map((job) => (
               <JobCard key={job.id} job={job} />
             ))}
