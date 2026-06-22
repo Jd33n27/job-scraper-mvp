@@ -37,57 +37,67 @@ function App() {
 
   return (
     <Router>
-      <div className="h-screen flex flex-col bg-[#e4e4e4] overflow-hidden select-none">
-        {/* Apple style classic navigation bar */}
-        <nav className="bg-gradient-to-b from-[#ffffff] to-[#cccccc] border-b border-[#808080] h-8 flex items-center justify-between px-3 shrink-0">
-          <Link to="/" className="flex items-center gap-1.5 font-bold font-sans text-xs">
-            <Briefcase className="w-3.5 h-3.5 text-[#0a5fcf]" />
-            <span className="tracking-tight text-black font-extrabold uppercase">
-              JobScrapper v1.0
+      <div className="h-screen flex flex-col bg-brand-cream overflow-hidden">
+        {/* Bio-Organic Sanctuary Bento Navigation Bar */}
+        <nav className="bg-brand-forest border-b border-brand-border-dark h-14 flex items-center justify-between px-6 shrink-0 shadow-sm z-30">
+          <Link to="/" className="flex items-center gap-2 font-serif text-lg font-bold text-brand-light-text hover:opacity-90 transition-opacity">
+            <Briefcase className="w-5 h-5 text-brand-terracotta" />
+            <span className="tracking-tight">
+              Sanctuary Scrapper
             </span>
           </Link>
 
-          <div className="flex items-center h-full">
+          <div className="flex items-center gap-1.5 h-full">
             <Link
               to="/"
-              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
             >
-              <Search className="w-3 h-3 mr-1" />
-              Jobs
+              <div className="flex items-center">
+                <Search className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
+                Catalog
+              </div>
             </Link>
             <Link
               to="/recommended"
-              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
             >
-              <Sparkles className="w-3 h-3 mr-1" />
-              For You
+              <div className="flex items-center">
+                <Sparkles className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
+                Recommendations
+              </div>
             </Link>
             <Link
               to="/applications"
-              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
             >
-              <History className="w-3 h-3 mr-1" />
-              History
+              <div className="flex items-center">
+                <History className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
+                Applications
+              </div>
             </Link>
             <Link
               to="/stats"
-              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black border-l border-r border-[#b5b5b5] hover:bg-[#dbe7f9] hover:text-black transition-colors"
+              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
             >
-              <BarChart3 className="w-3 h-3 mr-1" />
-              Stats
+              <div className="flex items-center">
+                <BarChart3 className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
+                Analytics
+              </div>
             </Link>
             <button
               onClick={() => setShowProfile(true)}
-              className="h-full flex items-center px-3 font-sans text-xs font-bold text-black hover:bg-[#dbe7f9] hover:text-black transition-colors border-r border-[#b5b5b5] cursor-pointer bg-transparent border-0 outline-none"
+              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200 cursor-pointer bg-transparent border-0 outline-none"
             >
-              <User className="w-3 h-3 mr-1" />
-              Profile
+              <div className="flex items-center">
+                <User className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
+                Profile
+              </div>
             </button>
           </div>
         </nav>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-hidden relative">
+        <main className="flex-1 overflow-hidden relative bg-brand-cream">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/recommended" element={<RecommendedJobs />} />
@@ -99,12 +109,12 @@ function App() {
           </Routes>
         </main>
 
-        {/* Classic system status bar */}
-        <footer className="h-6 bg-[#cccccc] border-t border-[#808080] flex items-center justify-between px-3 text-[10px] font-mono text-gray-700 shrink-0 select-none">
-          <div>&copy; 2026 JobScrapper &bull; Retro Job Dashboard</div>
-          <div className="flex items-center gap-3">
-            <span>Status: Connected</span>
-            <span>Index: Supabase SQL DB</span>
+        {/* Bio-Organic clean footer */}
+        <footer className="h-8 bg-brand-panel-light border-t border-brand-border flex items-center justify-between px-6 text-xs text-brand-muted-text shrink-0 select-none">
+          <div className="font-sans font-medium">&copy; 2026 Sanctuary Job Suite</div>
+          <div className="flex items-center gap-4 font-mono text-[11px]">
+            <span>System: <span className="text-brand-forest font-bold">Healthy</span></span>
+            <span>Catalog: <span className="text-brand-terracotta font-bold">Supabase</span></span>
           </div>
         </footer>
 

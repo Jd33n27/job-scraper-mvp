@@ -75,101 +75,101 @@ const StatsDashboard: React.FC = () => {
   if (loading || !stats) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-terracotta"></div>
       </div>
     );
   }
 
-  const COLORS = ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe"];
+  const COLORS = ["#1A3026", "#C86A51", "#4A5F56", "#E8EFE9", "#DCD5CB"];
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-6 pb-12">
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 flex-shrink-0">
-            <Briefcase className="w-6 h-6" />
+        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+          <div className="w-12 h-12 bg-brand-sage rounded-xl flex items-center justify-center text-brand-forest flex-shrink-0 border border-brand-border/40">
+            <Briefcase className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Jobs Today</p>
-            <h3 className="text-2xl font-bold text-gray-900">{stats.jobs_today}</h3>
+            <p className="text-[10px] font-bold text-brand-muted-text uppercase tracking-wider">Jobs Today</p>
+            <h3 className="text-xl font-bold text-brand-forest mt-0.5">{stats.jobs_today}</h3>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-indigo-50 rounded-xl flex items-center justify-center text-indigo-600 flex-shrink-0">
-            <Calendar className="w-6 h-6" />
+        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+          <div className="w-12 h-12 bg-brand-cream rounded-xl flex items-center justify-center text-brand-terracotta flex-shrink-0 border border-brand-border/40">
+            <Calendar className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Jobs Week</p>
-            <h3 className="text-2xl font-bold text-gray-900">{stats.jobs_week}</h3>
+            <p className="text-[10px] font-bold text-brand-muted-text uppercase tracking-wider">Jobs Week</p>
+            <h3 className="text-xl font-bold text-brand-forest mt-0.5">{stats.jobs_week}</h3>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-teal-600 flex-shrink-0">
-            <CheckCircle className="w-6 h-6" />
+        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+          <div className="w-12 h-12 bg-[#EBF7EE] rounded-xl flex items-center justify-center text-[#1E5D2F] flex-shrink-0 border border-[#C5ECD0]/40">
+            <CheckCircle className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Apps Today</p>
-            <h3 className="text-2xl font-bold text-gray-900">{stats.applications_today}</h3>
+            <p className="text-[10px] font-bold text-brand-muted-text uppercase tracking-wider">Apps Today</p>
+            <h3 className="text-xl font-bold text-brand-forest mt-0.5">{stats.applications_today}</h3>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600 flex-shrink-0">
-            <Award className="w-6 h-6" />
+        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+          <div className="w-12 h-12 bg-[#FFF9E6] rounded-xl flex items-center justify-center text-[#B06000] flex-shrink-0 border border-[#FCE8B2]/40">
+            <Award className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Total Apps</p>
-            <h3 className="text-2xl font-bold text-gray-900">{stats.total_applications}</h3>
+            <p className="text-[10px] font-bold text-brand-muted-text uppercase tracking-wider">Total Apps</p>
+            <h3 className="text-xl font-bold text-brand-forest mt-0.5">{stats.total_applications}</h3>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex items-center gap-4">
-          <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 flex-shrink-0">
-            <TrendingUp className="w-6 h-6" />
+        <div className="bg-white p-5 rounded-[20px] border border-brand-border shadow-sm flex items-center gap-4 hover:translate-y-[-2px] transition-all duration-200">
+          <div className="w-12 h-12 bg-[#FDF2ED] rounded-xl flex items-center justify-center text-[#A64115] flex-shrink-0 border border-[#FAD6C5]/40">
+            <TrendingUp className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Success Rate</p>
-            <h3 className="text-2xl font-bold text-gray-900">{stats.success_rate.toFixed(1)}%</h3>
+            <p className="text-[10px] font-bold text-brand-muted-text uppercase tracking-wider">Success Rate</p>
+            <h3 className="text-xl font-bold text-brand-forest mt-0.5">{stats.success_rate.toFixed(1)}%</h3>
           </div>
         </div>
       </div>
 
       {/* Daily Trends (Line Charts) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+        <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
           <div className="flex items-center gap-2 mb-6">
-            <TrendingUp className="w-5 h-5 text-blue-500" />
-            <h3 className="text-lg font-bold text-gray-900">Jobs Scraped (7 Days)</h3>
+            <TrendingUp className="w-4 h-4 text-brand-terracotta" />
+            <h3 className="text-base font-serif font-black text-brand-forest">Jobs Scraped (7 Days)</h3>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={stats.jobs_daily} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#6b7280" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: "#6b7280" }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }} />
-                <Line type="monotone" dataKey="count" stroke="#3b82f6" strokeWidth={3} dot={{ fill: "#3b82f6", r: 4 }} activeDot={{ r: 6 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#FAF7F2" />
+                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#4A5F56" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: "#4A5F56" }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ borderRadius: "12px", border: "1px solid #DCD5CB", backgroundColor: "#FAF7F2", boxShadow: "0 4px 15px rgba(26, 48, 38, 0.05)" }} />
+                <Line type="monotone" dataKey="count" stroke="#1A3026" strokeWidth={3} dot={{ fill: "#1A3026", r: 4 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+        <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
           <div className="flex items-center gap-2 mb-6">
-            <CheckCircle className="w-5 h-5 text-green-500" />
-            <h3 className="text-lg font-bold text-gray-900">Applications Submitted (7 Days)</h3>
+            <CheckCircle className="w-4 h-4 text-[#1E5D2F]" />
+            <h3 className="text-base font-serif font-black text-brand-forest">Applications Submitted (7 Days)</h3>
           </div>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={stats.applications_daily} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
-                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#6b7280" }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: "#6b7280" }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)" }} />
-                <Line type="monotone" dataKey="count" stroke="#10b981" strokeWidth={3} dot={{ fill: "#10b981", r: 4 }} activeDot={{ r: 6 }} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#FAF7F2" />
+                <XAxis dataKey="date" tick={{ fontSize: 11, fill: "#4A5F56" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: "#4A5F56" }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ borderRadius: "12px", border: "1px solid #DCD5CB", backgroundColor: "#FAF7F2", boxShadow: "0 4px 15px rgba(26, 48, 38, 0.05)" }} />
+                <Line type="monotone" dataKey="count" stroke="#C86A51" strokeWidth={3} dot={{ fill: "#C86A51", r: 4 }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -177,10 +177,10 @@ const StatsDashboard: React.FC = () => {
       </div>
 
       {/* Main Chart Section */}
-      <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+      <div className="bg-white p-6 rounded-[20px] border border-brand-border shadow-sm">
         <div className="flex items-center gap-2 mb-6">
-          <Building className="w-5 h-5 text-gray-400" />
-          <h3 className="text-lg font-bold text-gray-900">Top Companies</h3>
+          <Building className="w-4 h-4 text-brand-muted-text" />
+          <h3 className="text-base font-serif font-black text-brand-forest">Top Companies</h3>
         </div>
 
         <div className="h-80 w-full">
@@ -194,7 +194,7 @@ const StatsDashboard: React.FC = () => {
                 strokeDasharray="3 3"
                 horizontal={true}
                 vertical={false}
-                stroke="#f3f4f6"
+                stroke="#FAF7F2"
               />
               <XAxis type="number" hide />
               <YAxis
@@ -202,18 +202,19 @@ const StatsDashboard: React.FC = () => {
                 type="category"
                 axisLine={false}
                 tickLine={false}
-                tick={{ fontSize: 12, fontWeight: 500, fill: "#4b5563" }}
+                tick={{ fontSize: 11, fontWeight: 600, fill: "#14221D" }}
                 width={100}
               />
               <Tooltip
-                cursor={{ fill: "#f9fafb" }}
+                cursor={{ fill: "rgba(232, 239, 233, 0.3)" }}
                 contentStyle={{
                   borderRadius: "12px",
-                  border: "none",
-                  boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)",
+                  border: "1px solid #DCD5CB",
+                  backgroundColor: "#FAF7F2",
+                  boxShadow: "0 4px 15px rgba(26, 48, 38, 0.05)",
                 }}
               />
-              <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={32}>
+              <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={24}>
                 {(stats.top_companies || []).map((_, index) => (
                   <Cell
                     key={`cell-${index}`}
@@ -226,7 +227,7 @@ const StatsDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Advanced Stats Section (Phase 4) */}
+      {/* Advanced Stats Section */}
       <AdvancedStats
         bySource={stats.by_source || []}
         byLocation={stats.by_location || []}

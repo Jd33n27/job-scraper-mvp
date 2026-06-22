@@ -1,16 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const Bottleneck = require("bottleneck");
-const remoteok = require("./remoteok");
 const indeed = require("./indeed");
-const linkedin = require("./linkedin");
 const upwork = require("./upwork");
 const fiverr = require("./fiverr");
-const remoteco = require("./remote-co");
-const flexjobs = require("./flexjobs");
+const glassdoor = require("./glassdoor");
 const robots = require("./robots");
-const himalayas = require("./himalayas");
-const remotive = require("./remotive");
 
 const app = express();
 app.use(cors());
@@ -33,7 +28,7 @@ app.post("/scrape", async (req, res) => {
       : ["react", "next.js", "typescript", "go", "golang"];
 
   console.log(
-    `Scrape request received for keywords: ${JSON.stringify(queryList)}. Aggregating from 9 sources...`,
+    `Scrape request received for keywords: ${JSON.stringify(queryList)}. Aggregating from 4 sources...`,
   );
 
   try {
@@ -45,53 +40,11 @@ app.post("/scrape", async (req, res) => {
 
       const results = await Promise.allSettled([
         limiter.schedule(async () => {
-          if (!(await robots.isAllowed("https://remoteok.com/"))) {
-            console.warn("Robots.txt Disallowed: RemoteOK");
-            return [];
-          }
-          return remoteok.scrape(query);
-        }),
-        limiter.schedule(async () => {
-          if (!(await robots.isAllowed("https://himalayas.app/"))) {
-            console.warn("Robots.txt Disallowed: Himalayas");
-            return [];
-          }
-          return himalayas.scrape(query);
-        }),
-        limiter.schedule(async () => {
-          if (!(await robots.isAllowed("https://remotive.com/"))) {
-            console.warn("Robots.txt Disallowed: Remotive");
-            return [];
-          }
-          return remotive.scrape(query);
-        }),
-        limiter.schedule(async () => {
-          if (!(await robots.isAllowed("https://remote.co/"))) {
-            console.warn("Robots.txt Disallowed: Remote.co");
-            return [];
-          }
-          return remoteco.scrape(query);
-        }),
-        limiter.schedule(async () => {
-          if (!(await robots.isAllowed("https://www.flexjobs.com/"))) {
-            console.warn("Robots.txt Disallowed: FlexJobs");
-            return [];
-          }
-          return flexjobs.scrape(query);
-        }),
-        limiter.schedule(async () => {
           if (!(await robots.isAllowed("https://www.indeed.com/"))) {
             console.warn("Robots.txt Disallowed: Indeed");
             return [];
           }
           return indeed.scrape(query);
-        }),
-        limiter.schedule(async () => {
-          if (!(await robots.isAllowed("https://www.linkedin.com/"))) {
-            console.warn("Robots.txt Disallowed: LinkedIn");
-            return [];
-          }
-          return linkedin.scrape(query);
         }),
         limiter.schedule(async () => {
           if (!(await robots.isAllowed("https://www.upwork.com/"))) {
@@ -107,19 +60,21 @@ app.post("/scrape", async (req, res) => {
           }
           return fiverr.scrape(query);
         }),
+        limiter.schedule(async () => {
+          if (!(await robots.isAllowed("https://www.glassdoor.com/"))) {
+            console.warn("Robots.txt Disallowed: Glassdoor");
+            return [];
+          }
+          return glassdoor.scrape(query);
+        }),
       ]);
 
       results.forEach((res, index) => {
         const sources = [
-          "RemoteOK",
-          "Himalayas",
-          "Remotive",
-          "Remote.co",
-          "FlexJobs",
           "Indeed",
-          "LinkedIn",
           "Upwork",
           "Fiverr",
+          "Glassdoor",
         ];
         
         if (res.status === "fulfilled") {

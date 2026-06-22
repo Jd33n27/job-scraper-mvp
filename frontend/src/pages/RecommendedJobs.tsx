@@ -39,8 +39,8 @@ const RecommendedJobs: React.FC = () => {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-96 gap-4">
-        <Loader2 className="w-10 h-10 text-blue-600 animate-spin" />
-        <p className="text-gray-500 font-medium animate-pulse">
+        <Loader2 className="w-10 h-10 text-brand-terracotta animate-spin" />
+        <p className="text-brand-muted-text font-medium animate-pulse">
           Analyzing matches for your profile...
         </p>
       </div>
@@ -48,15 +48,15 @@ const RecommendedJobs: React.FC = () => {
   }
 
   return (
-    <div className="h-full overflow-y-auto p-4 md:p-6">
+    <div className="h-full overflow-y-auto p-6 md:p-8 bg-brand-cream">
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
           <div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight flex items-center gap-3">
-              <Sparkles className="w-8 h-8 text-blue-600" />
+            <h1 className="text-3xl font-serif font-black text-brand-forest tracking-tight flex items-center gap-3">
+              <Sparkles className="w-8 h-8 text-brand-terracotta" />
               Recommended For You
             </h1>
-            <p className="text-gray-500 mt-2 text-lg">
+            <p className="text-brand-muted-text mt-2 text-base">
               Top {jobs.length} jobs matched specifically against your CV skills
               and experience.
             </p>
@@ -64,24 +64,24 @@ const RecommendedJobs: React.FC = () => {
         </div>
 
         {jobs.length === 0 ? (
-          <div className="bg-white p-16 rounded-3xl border-2 border-dashed border-gray-100 text-center space-y-6">
-            <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto">
+          <div className="bento-panel bg-white/70 backdrop-blur-md p-16 text-center space-y-6">
+            <div className="w-20 h-20 bg-brand-sage text-brand-terracotta rounded-full flex items-center justify-center mx-auto border border-brand-border">
               <Sparkles className="w-10 h-10" />
             </div>
             <div className="max-w-xs mx-auto">
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-serif font-black text-brand-forest">
                 Personalize Your Search
               </h3>
-              <p className="text-gray-400 mt-2">
+              <p className="text-brand-muted-text mt-2">
                 Upload your CV to see AI-powered job matches ranked by your
                 specific skills.
-            </p>
+              </p>
             </div>
             <button
               onClick={() =>
                 (window as any).dispatchEvent(new CustomEvent("open-cv-upload"))
               }
-              className="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200"
+              className="bento-btn"
             >
               Upload CV Now
             </button>

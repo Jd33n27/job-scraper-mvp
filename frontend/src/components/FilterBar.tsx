@@ -22,50 +22,52 @@ const FilterBar: React.FC<FilterBarProps> = ({
   onApply,
 }) => {
   return (
-    <div className="flex flex-wrap items-center gap-3 font-sans text-[11px] text-black">
-      <div className="flex items-center gap-1">
-        <span className="font-bold">Query:</span>
+    <div className="flex flex-wrap items-center gap-4 text-xs text-brand-dark-text font-medium">
+      <div className="flex items-center gap-1.5">
+        <span className="font-semibold">Query:</span>
         <input
           type="text"
           placeholder="Title, skills..."
-          className="w-36 px-1.5 py-0.5 font-mono text-[11px] border border-gray-500 bg-white"
+          className="w-36 px-2.5 py-1 text-xs border border-brand-border bg-white rounded-lg focus:outline-none focus:border-brand-terracotta"
           value={filters.keyword}
           onChange={(e) => setFilters({ ...filters, keyword: e.target.value })}
         />
       </div>
 
-      <div className="flex items-center gap-1">
-        <span className="font-bold">Location:</span>
+      <div className="flex items-center gap-1.5">
+        <span className="font-semibold">Location:</span>
         <input
           type="text"
           placeholder="e.g. Remote"
-          className="w-28 px-1.5 py-0.5 font-mono text-[11px] border border-gray-500 bg-white"
+          className="w-28 px-2.5 py-1 text-xs border border-brand-border bg-white rounded-lg focus:outline-none focus:border-brand-terracotta"
           value={filters.location}
           onChange={(e) => setFilters({ ...filters, location: e.target.value })}
         />
       </div>
 
-      <div className="flex items-center gap-1.5">
-        <span className="font-bold">Min Salary:</span>
+      <div className="flex items-center gap-2">
+        <span className="font-semibold">Min Salary:</span>
         <input
           type="range"
           min="0"
           max="300"
           step="10"
-          className="w-20 cursor-pointer accent-[#0a5fcf]"
+          className="w-24 cursor-pointer accent-brand-terracotta"
           value={filters.minSalary}
           onChange={(e) =>
             setFilters({ ...filters, minSalary: parseInt(e.target.value) })
           }
         />
-        <span className="font-mono text-[10px] bg-white border border-gray-400 px-0.5 select-all">${filters.minSalary}k</span>
+        <span className="font-mono text-[10.5px] bg-brand-cream border border-brand-border px-1.5 py-0.5 rounded font-bold">
+          ${filters.minSalary}k
+        </span>
       </div>
 
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
         <input
           type="checkbox"
           id="autoApply"
-          className="w-3 h-3 cursor-pointer"
+          className="w-3.5 h-3.5 cursor-pointer accent-brand-terracotta"
           checked={filters.supportsAutoApply}
           onChange={(e) =>
             setFilters({ ...filters, supportsAutoApply: e.target.checked })
@@ -73,16 +75,15 @@ const FilterBar: React.FC<FilterBarProps> = ({
         />
         <label
           htmlFor="autoApply"
-          className="font-bold cursor-pointer select-none"
+          className="font-semibold cursor-pointer select-none"
         >
-          Auto-Apply
+          Auto-Apply Friendly
         </label>
       </div>
 
       <button
         onClick={onApply}
-        className="mac-btn px-2 py-0.5"
-        style={{ padding: "2px 8px", fontSize: "10.5px" }}
+        className="bento-btn py-1 px-4 text-xs font-bold"
       >
         Apply
       </button>

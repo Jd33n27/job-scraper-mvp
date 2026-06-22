@@ -1,1 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Fira+Code:wght@300..700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --color-brand-cream: #FAF7F2;
+  --color-brand-forest: #1A3026;
+  --color-brand-sage: #E8EFE9;
+  --color-brand-panel-light: #F3EFE7;
+  --color-brand-terracotta: #C86A51;
+  --color-brand-terracotta-hover: #B4573F;
+  --color-brand-dark-text: #14221D;
+  --color-brand-muted-text: #4A5F56;
+  --color-brand-light-text: #F7F5F0;
+  --color-brand-border: #DCD5CB;
+  --color-brand-border-dark: #2A4237;
+  
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Outfit", "Inter", system-ui, sans-serif;
+  --font-mono: "Fira Code", monospace;
+  --radius-bento: 24px;
+}

@@ -122,12 +122,12 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-[#e4e4e4] overflow-hidden p-1.5 font-sans">
-      {/* Dense Finder-like Toolbar */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-2 border border-[#808080] bg-[#cccccc] p-1.5 mb-1.5 select-none shadow-[inset_1px_1px_0_#fff] shrink-0">
-        <div className="flex items-center gap-2 w-full md:w-auto">
-          <span className="font-sans text-[11px] font-bold text-black uppercase">
-            Parameters:
+    <div className="h-full flex flex-col bg-brand-cream overflow-hidden p-6 font-sans">
+      {/* Bio-Organic Bento Filtering Toolbar */}
+      <div className="bento-panel flex flex-col md:flex-row justify-between items-center gap-4 mb-5 select-none shrink-0">
+        <div className="flex items-center gap-3 w-full md:w-auto">
+          <span className="font-sans text-xs font-bold text-brand-forest uppercase tracking-wider">
+            Filters:
           </span>
           <div className="flex-1 md:flex-none">
             <FilterBar filters={filters} setFilters={setFilters} onApply={handleApplyFilters} />
@@ -136,22 +136,22 @@ const Home: React.FC = () => {
         <button
           onClick={triggerScrape}
           disabled={scraping}
-          className="mac-btn shrink-0"
+          className="bento-btn shrink-0"
         >
-          <RefreshCw className={`w-3 h-3 ${scraping ? "animate-spin" : ""}`} />
-          {scraping ? "Indexing..." : "Re-index Catalog"}
+          <RefreshCw className={`w-3.5 h-3.5 ${scraping ? "animate-spin" : ""}`} />
+          {scraping ? "Scraping Pages..." : "Re-Index Sources"}
         </button>
       </div>
 
       {/* Main Split Window */}
-      <div className="flex-1 grid grid-cols-12 gap-1.5 min-h-0 overflow-hidden">
-        {/* Left Column (30%): Job Catalog (Finder list) */}
+      <div className="flex-1 grid grid-cols-12 gap-6 min-h-0 overflow-hidden">
+        {/* Left Column (33%): Job Catalog (Finder list) */}
         <div className="col-span-4 h-full flex flex-col overflow-hidden min-w-0">
-          <div className="bg-[#cccccc] border-t border-l border-r border-[#808080] px-2 py-0.5 font-sans font-bold text-[10px] text-black shadow-[inset_1px_1px_0_#fff] uppercase flex items-center justify-between select-none">
-            <span>Items Catalog</span>
-            <span>Count: {jobs.length}</span>
+          <div className="font-serif text-sm font-bold text-brand-forest mb-2 flex items-center justify-between select-none">
+            <span>Active Catalog</span>
+            <span className="font-mono text-xs text-brand-muted-text font-bold bg-brand-sage px-2 py-0.5 rounded-full">{jobs.length} Jobs</span>
           </div>
-          <div className="flex-1 overflow-hidden min-h-0">
+          <div className="flex-1 overflow-hidden min-h-0 bento-panel bg-white/70 backdrop-blur-md p-4">
             <JobList
               jobs={jobs}
               loading={loading}
@@ -161,44 +161,44 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        {/* Middle Column (35%): AI Analyzer & Workspace */}
+        {/* Middle Column (33%): AI Analyzer & Workspace */}
         <div className="col-span-4 h-full flex flex-col overflow-hidden min-w-0">
-          <div className="bg-[#cccccc] border-t border-l border-r border-[#808080] px-2 py-0.5 font-sans font-bold text-[10px] text-black shadow-[inset_1px_1px_0_#fff] uppercase select-none">
-            <span>Metadata &amp; Workspace</span>
+          <div className="font-serif text-sm font-bold text-brand-forest mb-2 select-none">
+            <span>Workspace &amp; Analysis</span>
           </div>
-          <div className="flex-1 border border-[#808080] bg-white p-2.5 overflow-y-auto panel-inset flex flex-col gap-3 min-h-0">
+          <div className="flex-1 bento-panel bg-white/70 backdrop-blur-md p-5 overflow-y-auto flex flex-col gap-4 min-h-0">
             {selectedJob ? (
               <>
                 {/* Title Card */}
-                <div className="border-b border-[#cccccc] pb-2">
-                  <span className="text-[10px] uppercase font-bold text-[#0a5fcf] font-mono tracking-wider">
+                <div className="border-b border-brand-border pb-3">
+                  <span className="text-[10px] uppercase font-bold text-brand-terracotta font-mono tracking-widest bg-brand-cream px-2 py-0.5 rounded-full border border-brand-border">
                     {selectedJob.source}
                   </span>
-                  <h3 className="text-sm font-bold text-black leading-tight mt-0.5">
+                  <h3 className="text-base font-serif font-black text-brand-forest leading-snug mt-2">
                     {selectedJob.title}
                   </h3>
-                  <div className="text-xs text-gray-800 font-medium mt-1 font-mono">
+                  <div className="text-xs text-brand-muted-text font-semibold mt-1.5 font-sans">
                     {selectedJob.company} &bull; {selectedJob.location || "Remote"}
                   </div>
                   {selectedJob.salary_min && (
-                    <div className="text-[11px] text-green-700 font-mono mt-1 font-bold">
-                      Salary: ${selectedJob.salary_min}k - ${selectedJob.salary_max}k
+                    <div className="text-xs text-brand-terracotta font-mono mt-2 font-bold bg-brand-cream/80 px-2 py-0.5 rounded border border-brand-border/60 w-fit">
+                      Est. Salary: ${selectedJob.salary_min}k - ${selectedJob.salary_max}k
                     </div>
                   )}
                 </div>
 
                 {/* AI Alignment Score */}
-                <div className="border border-[#c0c0c0] bg-[#f7f7f9] p-2">
+                <div className="border border-brand-border bg-brand-cream/50 rounded-xl p-3.5">
                   <div className="flex items-center justify-between">
-                    <span className="font-sans text-[11px] font-bold text-black uppercase">
+                    <span className="font-sans text-[11px] font-bold text-brand-forest uppercase tracking-wider">
                       AI Alignment Index
                     </span>
-                    <span className="font-mono text-xs font-black text-[#0a5fcf] bg-blue-50 px-1 border border-blue-200">
+                    <span className="font-mono text-xs font-black text-brand-terracotta bg-brand-sage px-2 py-0.5 rounded-lg border border-brand-border">
                       {selectedJob.match ? selectedJob.match.score : selectedJob.ai_score}%
                     </span>
                   </div>
                   {selectedJob.ai_reasoning && (
-                    <div className="mt-2 font-mono text-[10.5px] leading-relaxed text-gray-700 bg-white p-1.5 border border-[#eaeaea]">
+                    <div className="mt-2.5 font-sans text-xs leading-relaxed text-brand-muted-text bg-white p-3 rounded-lg border border-brand-border">
                       {selectedJob.ai_reasoning}
                     </div>
                   )}
@@ -206,18 +206,18 @@ const Home: React.FC = () => {
 
                 {/* Skills Analysis */}
                 {selectedJob.match && (
-                  <div className="border border-[#c0c0c0] bg-white p-2">
-                    <div className="font-sans text-[10px] font-bold text-black uppercase mb-1.5">
+                  <div className="border border-brand-border bg-white rounded-xl p-3.5">
+                    <div className="font-sans text-[10px] font-bold text-brand-forest uppercase tracking-wider mb-2">
                       CV Match Matrix
                     </div>
-                    <div className="flex flex-col gap-1.5">
+                    <div className="flex flex-col gap-2">
                       <div className="flex flex-wrap gap-1">
                         {(selectedJob.match.matched_skills || []).map((skill) => (
                           <span
                             key={skill}
-                            className="bg-[#e2f0d9] border border-[#a8d08d] text-[#375623] px-1 text-[10px] font-mono font-bold"
+                            className="bg-[#EBF7EE] border border-[#C5ECD0] text-[#1E5D2F] px-2 py-0.5 rounded-md text-[10px] font-sans font-bold"
                           >
-                            + {skill}
+                            ✓ {skill}
                           </span>
                         ))}
                       </div>
@@ -225,9 +225,9 @@ const Home: React.FC = () => {
                         {(selectedJob.match.missing_skills || []).map((skill) => (
                           <span
                             key={skill}
-                            className="bg-[#fce4d6] border border-[#f8cbad] text-[#c65911] px-1 text-[10px] font-mono font-bold"
+                            className="bg-[#FDF2ED] border border-[#FAD6C5] text-[#A64115] px-2 py-0.5 rounded-md text-[10px] font-sans font-bold"
                           >
-                            - {skill}
+                            ✗ {skill}
                           </span>
                         ))}
                       </div>
@@ -236,18 +236,18 @@ const Home: React.FC = () => {
                 )}
 
                 {/* Action Triggers */}
-                <div className="border border-[#c0c0c0] bg-[#f7f7f9] p-2 flex flex-wrap gap-2 items-center justify-between">
-                  <span className="font-sans text-[10px] font-bold text-black uppercase">
-                    System Actions
+                <div className="border border-brand-border bg-brand-panel-light/40 rounded-xl p-3 flex flex-wrap gap-2 items-center justify-between">
+                  <span className="font-sans text-[10px] font-bold text-brand-forest uppercase tracking-wider">
+                    Portal Options
                   </span>
                   <div className="flex gap-2 items-center">
                     <a
                       href={selectedJob.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mac-btn flex items-center"
+                      className="bento-btn bento-btn-secondary py-1 text-xs"
                     >
-                      <ExternalLink className="w-3 h-3" />
+                      <ExternalLink className="w-3.5 h-3.5" />
                       External Tab
                     </a>
                     {selectedJob.supports_auto_apply && (
@@ -260,37 +260,36 @@ const Home: React.FC = () => {
                 </div>
 
                 {/* AI Cover Letter Assistant */}
-                <div className="border border-[#c0c0c0] p-2 mt-auto">
-                  <div className="flex justify-between items-center mb-1.5">
-                    <span className="font-sans text-[10px] font-bold text-black uppercase flex items-center gap-1">
-                      <FileText className="w-3 h-3 text-black" />
-                      AI Application Kit
+                <div className="border border-brand-border rounded-xl p-3 bg-white mt-auto">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-sans text-[10px] font-bold text-brand-forest uppercase tracking-wider flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5 text-brand-forest" />
+                      Application Cover Letter
                     </span>
                     {coverLetter && (
                       <button
                         onClick={() => copyToClipboard(coverLetter)}
-                        className="mac-btn"
-                        style={{ padding: "1px 6px", fontSize: "10px" }}
+                        className="bento-btn py-0.5 px-2.5 text-[11px]"
                       >
-                        <Copy className="w-2.5 h-2.5 mr-1" />
+                        <Copy className="w-3 h-3 mr-1" />
                         Copy Text
                       </button>
                     )}
                   </div>
 
                   {!coverLetter ? (
-                    <div className="text-center py-4 bg-[#f9f9f9] border border-[#e0e0e0]">
-                      <p className="text-[10px] font-mono text-gray-500 mb-2">
-                        Draft a highly targeted cover letter matching your CV profile.
+                    <div className="text-center py-5 bg-brand-cream/30 border border-dashed border-brand-border rounded-lg">
+                      <p className="text-xs text-brand-muted-text mb-3 px-4">
+                        Draft a highly targeted cover letter aligned with this job and your parsed CV details.
                       </p>
                       <button
                         onClick={generateCL}
                         disabled={clLoading}
-                        className="mac-btn"
+                        className="bento-btn text-xs py-1.5"
                       >
                         {clLoading ? (
                           <>
-                            <RefreshCw className="w-3 h-3 animate-spin mr-1" />
+                            <RefreshCw className="w-3.5 h-3.5 animate-spin mr-1.5" />
                             Drafting...
                           </>
                         ) : (
@@ -298,15 +297,15 @@ const Home: React.FC = () => {
                         )}
                       </button>
                       {clError && (
-                        <div className="mt-1 text-[9px] font-mono text-red-600 flex items-center justify-center gap-1">
-                          <AlertCircle className="w-2.5 h-2.5" />
+                        <div className="mt-2 text-[10px] text-red-600 flex items-center justify-center gap-1.5">
+                          <AlertCircle className="w-3 h-3" />
                           {clError}
                         </div>
                       )}
                     </div>
                   ) : (
                     <textarea
-                      className="w-full h-24 p-1.5 font-mono text-[10.5px] border border-[#a0a0a0] leading-relaxed resize-none overflow-y-auto focus:outline-none"
+                      className="w-full h-24 p-2.5 font-mono text-xs border border-brand-border rounded-lg leading-relaxed resize-none overflow-y-auto focus:outline-none focus:border-brand-terracotta"
                       value={coverLetter}
                       onChange={(e) => setCoverLetter(e.target.value)}
                     />
@@ -314,25 +313,25 @@ const Home: React.FC = () => {
                 </div>
               </>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center text-center text-gray-500 font-mono text-xs">
-                <FileText className="w-8 h-8 text-gray-400 mb-2" />
+              <div className="flex-1 flex flex-col items-center justify-center text-center text-brand-muted-text font-sans text-xs">
+                <FileText className="w-8 h-8 text-brand-border mb-3" />
                 Select job item from the catalog.
               </div>
             )}
           </div>
         </div>
 
-        {/* Right Column (35%): Portal (Job form view) */}
+        {/* Right Column (34%): Portal (Job form view) */}
         <div className="col-span-4 h-full flex flex-col overflow-hidden min-w-0">
-          <div className="bg-[#cccccc] border-t border-l border-r border-[#808080] px-2 py-0.5 font-sans font-bold text-[10px] text-black shadow-[inset_1px_1px_0_#fff] uppercase flex items-center justify-between select-none">
-            <span>External Application Portal</span>
+          <div className="font-serif text-sm font-bold text-brand-forest mb-2 flex items-center justify-between select-none">
+            <span>Embedded Portal</span>
             {selectedJob && (
-              <span className="font-mono text-[9px] truncate max-w-40 text-gray-600">
+              <span className="font-mono text-[10px] truncate max-w-40 text-brand-muted-text">
                 {selectedJob.url}
               </span>
             )}
           </div>
-          <div className="flex-1 border border-[#808080] bg-[#d0d0d0] relative overflow-hidden panel-inset">
+          <div className="flex-1 bento-panel bg-white overflow-hidden relative p-0 border border-brand-border shadow-sm">
             {selectedJob ? (
               <iframe
                 src={`${API_BASE_URL}/proxy?url=${encodeURIComponent(selectedJob.url)}`}
@@ -341,8 +340,8 @@ const Home: React.FC = () => {
                 sandbox="allow-same-origin allow-scripts allow-forms"
               />
             ) : (
-              <div className="w-full h-full flex flex-col items-center justify-center text-center text-gray-500 font-mono text-xs p-4">
-                <ExternalLink className="w-8 h-8 text-gray-400 mb-2" />
+              <div className="w-full h-full flex flex-col items-center justify-center text-center text-brand-muted-text font-sans text-xs p-5">
+                <ExternalLink className="w-8 h-8 text-brand-border mb-3" />
                 No active portal loaded.<br />
                 Apply directly within this frame.
               </div>

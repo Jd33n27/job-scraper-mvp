@@ -7,32 +7,32 @@ interface MatchScoreProps {
 
 const MatchScore: React.FC<MatchScoreProps> = ({ score, size = "md" }) => {
   const getColor = () => {
-    if (score >= 80) return "text-green-600 bg-green-50 border-green-200";
-    if (score >= 60) return "text-blue-600 bg-blue-50 border-blue-200";
-    if (score >= 40) return "text-yellow-600 bg-yellow-50 border-yellow-200";
-    return "text-gray-400 bg-gray-50 border-gray-200";
+    if (score >= 80) return "text-[#1E5D2F] bg-[#EBF7EE] border-[#C5ECD0]";
+    if (score >= 60) return "text-[#B06000] bg-[#FFF9E6] border-[#FCE8B2]";
+    if (score >= 40) return "text-[#A64115] bg-[#FDF2ED] border-[#FAD6C5]";
+    return "text-brand-muted-text bg-brand-cream border-brand-border";
   };
 
   const getLabel = () => {
-    if (score >= 80) return "Excellent Match";
-    if (score >= 60) return "Good Match";
-    if (score >= 40) return "Fair Match";
-    return "Low Match";
+    if (score >= 80) return "Strong Alignment";
+    if (score >= 60) return "Good Alignment";
+    if (score >= 40) return "Moderate Alignment";
+    return "Low Alignment";
   };
 
   const sizeClasses = {
-    sm: "px-2 py-0.5 text-xs",
-    md: "px-3 py-1 text-sm",
-    lg: "px-4 py-2 text-base",
+    sm: "px-2 py-0.5 text-[10.5px]",
+    md: "px-3 py-1 text-xs",
+    lg: "px-3.5 py-1.5 text-sm",
   };
 
   return (
-    <div className={`flex items-center gap-2`}>
-      <div className={`font-bold border rounded-full ${sizeClasses[size]} ${getColor()}`}>
+    <div className="flex items-center gap-2">
+      <div className={`font-mono font-black border rounded-full ${sizeClasses[size]} ${getColor()}`}>
         {score}%
       </div>
       {size !== "sm" && (
-        <span className="text-xs font-medium text-gray-500">{getLabel()}</span>
+        <span className="text-xs font-semibold text-brand-muted-text">{getLabel()}</span>
       )}
     </div>
   );
