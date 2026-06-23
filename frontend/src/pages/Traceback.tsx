@@ -136,7 +136,7 @@ export default function Traceback() {
                 </div>
 
                 {/* Automation Log Terminal Wrapper */}
-                <div className="w-full bg-black/40 border border-white/10 rounded-xl p-4 font-mono text-xs text-slate-300 space-y-3 shadow-inner min-h-[300px]">
+                <div className="w-full bg-black/40 border border-white/10 rounded-xl p-4 font-mono text-xs text-slate-300 space-y-3 shadow-inner min-h-75">
                   {data.logs && data.logs.length > 0 ? (
                     (data.logs as any[]).map((log, index) => {
                       const isStructured =
@@ -160,7 +160,7 @@ export default function Traceback() {
                       return (
                         <div
                           key={index}
-                          className="flex items-start gap-2.5 leading-relaxed tracking-normal border-b border-white/[0.03] pb-2 last:border-0 last:pb-0"
+                          className="flex items-start gap-2.5 leading-relaxed tracking-normal border-b border-white/3 pb-2 last:border-0 last:pb-0"
                         >
                           <span className="text-slate-600 shrink-0 select-none">
                             {icon}

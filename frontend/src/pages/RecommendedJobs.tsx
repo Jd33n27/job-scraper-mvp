@@ -52,7 +52,7 @@ export default function RecommendedJobs({
   };
 
   return (
-    <div className="h-full w-full flex bg-[#0f0d0c] overflow-hidden text-slate-200">
+    <div className="h-full w-full flex bg-slate-950 overflow-hidden text-slate-200">
       {/* Left Grid Pane: Sidebar Controls */}
       <aside className="w-80 border-r border-white/10 p-6 flex flex-col gap-6 overflow-y-auto shrink-0 bg-black/10">
         <div className="flex flex-col gap-1.5">
@@ -71,7 +71,7 @@ export default function RecommendedJobs({
       <main className="flex-1 flex flex-col h-full overflow-hidden">
         <header className="px-8 py-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-black/5">
           <div>
-            <h1 className="text-lg font-bold text-slate-100 tracking-wide bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-400">
+            <h1 className="text-lg font-bold tracking-wide bg-clip-text text-transparent bg-linear-to-r from-cyan-400 to-violet-400">
               Recommended Roles
             </h1>
             <p className="text-xs text-slate-400">

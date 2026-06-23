@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, User, Mail, Phone, Save, Code, FileText } from "lucide-react";
+import { X, Save} from "lucide-react";
 import type { UserProfile } from "../utils/profile";
 
 interface ProfileModalProps {
@@ -28,7 +28,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-60 p-4">
       <div className="bg-slate-900 border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
         <div className="px-6 py-4 border-b border-white/10 flex justify-between items-center bg-white/5">
           <h3 className="text-xl font-bold text-slate-100">Identity Config</h3>
@@ -53,8 +53,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 Full Name
               </label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <div>
                 <input
                   type="text"
                   required
@@ -72,8 +71,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
               <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 Email
               </label>
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <div>
                 <input
                   type="email"
                   required
@@ -92,8 +90,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
             <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
               Phone
             </label>
-            <div className="relative">
-              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+            <div>
               <input
                 type="tel"
                 required
@@ -111,10 +108,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
             <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
               Skills (CSV)
             </label>
-            <div className="relative">
-              <Code className="absolute left-3 top-3 w-4 h-4 text-slate-500" />
+            <div>
               <textarea
-                className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all min-h-[80px] text-[#171514] placeholder-slate-500 resize-none font-medium"
+                className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all min-h-20 text-[#171514] placeholder-slate-500 resize-none font-medium"
                 placeholder="React, TypeScript, Go..."
                 value={formData.skills}
                 onChange={(e) =>
@@ -128,10 +124,10 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
             <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
               Bio / Context
             </label>
-            <div className="relative">
-              <FileText className="absolute left-3 top-3 w-4 h-4 text-slate-500" />
+
+            <div>
               <textarea
-                className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all min-h-[120px] text-[#171514] placeholder-slate-500 resize-none font-medium"
+                className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all min-h-30 text-[#171514] placeholder-slate-500 resize-none font-medium"
                 placeholder="Software engineer focused on scalable systems..."
                 value={formData.bio}
                 onChange={(e) =>
