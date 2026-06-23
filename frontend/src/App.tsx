@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/Home";
 import Applications from "./pages/Applications";
 import Traceback from "./pages/Traceback";
@@ -7,8 +14,10 @@ import Stats from "./pages/Stats";
 import RecommendedJobs from "./pages/RecommendedJobs";
 import MatchAnalytics from "./pages/MatchAnalytics";
 import SystemHealth from "./pages/SystemHealth";
+import HowItWorks from "./pages/HowItWorks";
 import ProfileModal from "./components/ProfileModal";
 import { fetchProfile, updateProfile, type UserProfile } from "./utils/profile";
+import type { Job } from "./components/JobCard";
 import {
   Briefcase,
   History,
@@ -16,12 +25,29 @@ import {
   User,
   BarChart3,
   Sparkles,
+  HelpCircle,
 } from "lucide-react";
 import "./App.css";
 
-function App() {
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes cache
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+function AppContent() {
   const [showProfile, setShowProfile] = useState(false);
   const [profile, setProfile] = useState<UserProfile | null>(null);
+  const location = useLocation();
+
+  // Shared application state cache
+  const [globalJobs, setGlobalJobs] = useState<Job[]>([]);
+  const [globalRecommended, setGlobalRecommended] = useState<Job[]>([]);
+  const [jobsLoaded, setJobsLoaded] = useState(false);
+  const [recommendedLoaded, setRecommendedLoaded] = useState(false);
 
   useEffect(() => {
     fetchProfile().then(setProfile);
@@ -35,98 +61,117 @@ function App() {
     }
   };
 
+  const NavLink = ({
+    to,
+    icon: Icon,
+    label,
+  }: {
+    to: string;
+    icon: any;
+    label: string;
+  }) => {
+    const isActive = location.pathname === to;
+    return (
+      <Link
+        to={to}
+        className={`flex items-center gap-2 px-4 py-2 rounded-full font-sans text-xs font-semibold transition-all duration-300 ${
+          isActive
+            ? "bg-white/10 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.1)]"
+            : "text-slate-400 hover:bg-white/5 hover:text-slate-200"
+        }`}
+      >
+        <Icon
+          className={`w-4 h-4 ${isActive ? "text-cyan-400" : "text-slate-400"}`}
+        />
+        {label}
+      </Link>
+    );
+  };
+
   return (
-    <Router>
-      <div className="h-screen flex flex-col bg-brand-cream overflow-hidden">
-        {/* Bio-Organic Sanctuary Bento Navigation Bar */}
-        <nav className="bg-brand-forest border-b border-brand-border-dark h-14 flex items-center justify-between px-6 shrink-0 shadow-sm z-30">
-          <Link to="/" className="flex items-center gap-2 font-serif text-lg font-bold text-brand-light-text hover:opacity-90 transition-opacity">
-            <Briefcase className="w-5 h-5 text-brand-terracotta" />
-            <span className="tracking-tight">
-              Sanctuary Scrapper
-            </span>
-          </Link>
+    <div className="h-screen flex flex-col bg-slate-950 overflow-hidden relative selection:bg-cyan-500/30">
+      <div className="fixed top-0 left-1/4 w-125 font-stretch-125 bg-violet-600/10 rounded-full mix-blend-screen filter blur-[128px] pointer-events-none z-0"></div>
+      <div className="fixed bottom-0 right-1/4 w-125 h-125 bg-cyan-600/10 rounded-full mix-blend-screen filter blur-[128px] pointer-events-none z-0"></div>
 
-          <div className="flex items-center gap-1.5 h-full">
-            <Link
-              to="/"
-              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
-            >
-              <div className="flex items-center">
-                <Search className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
-                Catalog
-              </div>
-            </Link>
-            <Link
-              to="/recommended"
-              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
-            >
-              <div className="flex items-center">
-                <Sparkles className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
-                Recommendations
-              </div>
-            </Link>
-            <Link
-              to="/applications"
-              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
-            >
-              <div className="flex items-center">
-                <History className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
-                Applications
-              </div>
-            </Link>
-            <Link
-              to="/stats"
-              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200"
-            >
-              <div className="flex items-center">
-                <BarChart3 className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
-                Analytics
-              </div>
-            </Link>
-            <button
-              onClick={() => setShowProfile(true)}
-              className="px-4 py-1.5 rounded-lg font-sans text-xs font-semibold text-brand-light-text hover:bg-brand-border-dark hover:text-brand-light-text transition-all duration-200 cursor-pointer bg-transparent border-0 outline-none"
-            >
-              <div className="flex items-center">
-                <User className="w-3.5 h-3.5 mr-1.5 text-brand-sage" />
-                Profile
-              </div>
-            </button>
+      <nav className="sticky top-0 z-50 bg-slate-950/50 backdrop-blur-2xl border-b border-white/10 h-16 flex items-center justify-between px-6 shrink-0">
+        <Link
+          to="/"
+          className="flex items-center gap-2 font-sans text-lg font-bold text-slate-100 hover:text-cyan-400 transition-colors group"
+        >
+          <div className="bg-linear-to-br from-cyan-400 to-violet-500 p-1.5 rounded-lg group-hover:shadow-[0_0_15px_rgba(34,211,238,0.3)] transition-all">
+            <Briefcase className="w-4 h-4 text-slate-950" />
           </div>
-        </nav>
+          <span className="tracking-wide">Phantom Scraper</span>
+        </Link>
 
-        {/* Main Content */}
-        <main className="flex-1 overflow-hidden relative bg-brand-cream">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/recommended" element={<RecommendedJobs />} />
-            <Route path="/applications" element={<Applications />} />
-            <Route path="/applications/:appId" element={<Traceback />} />
-            <Route path="/stats" element={<Stats />} />
-            <Route path="/analytics" element={<MatchAnalytics />} />
-            <Route path="/health" element={<SystemHealth />} />
-          </Routes>
-        </main>
+        <div className="flex items-center gap-2 h-full">
+          <NavLink to="/" icon={Search} label="Catalog" />
+          <NavLink to="/recommended" icon={Sparkles} label="Recommendations" />
+          <NavLink to="/applications" icon={History} label="Applications" />
+          <NavLink to="/stats" icon={BarChart3} label="Analytics" />
+          <NavLink to="/how-it-works" icon={HelpCircle} label="How it Works" />
 
-        {/* Bio-Organic clean footer */}
-        <footer className="h-8 bg-brand-panel-light border-t border-brand-border flex items-center justify-between px-6 text-xs text-brand-muted-text shrink-0 select-none">
-          <div className="font-sans font-medium">&copy; 2026 Sanctuary Job Suite</div>
-          <div className="flex items-center gap-4 font-mono text-[11px]">
-            <span>System: <span className="text-brand-forest font-bold">Healthy</span></span>
-            <span>Catalog: <span className="text-brand-terracotta font-bold">Supabase</span></span>
-          </div>
-        </footer>
+          <button
+            onClick={() => setShowProfile(true)}
+            className="flex items-center gap-2 px-4 py-2 rounded-full font-sans text-xs font-semibold text-slate-400 hover:bg-white/5 hover:text-slate-200 transition-all duration-300 bg-transparent border border-transparent hover:border-white/10 cursor-pointer outline-none ml-2"
+          >
+            <User className="w-4 h-4 text-slate-400" />
+            Profile
+          </button>
+        </div>
+      </nav>
 
-        {showProfile && (
-          <ProfileModal
-            initialData={profile || undefined}
-            onClose={() => setShowProfile(false)}
-            onSave={handleSaveProfile}
+      <main className="flex-1 overflow-hidden relative z-10">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                sharedJobs={globalJobs}
+                setSharedJobs={setGlobalJobs}
+                isLoaded={jobsLoaded}
+                setIsLoaded={setJobsLoaded}
+              />
+            }
           />
-        )}
-      </div>
-    </Router>
+          <Route
+            path="/recommended"
+            element={
+              <RecommendedJobs
+                sharedJobs={globalRecommended}
+                setSharedJobs={setGlobalRecommended}
+                isLoaded={recommendedLoaded}
+                setIsLoaded={setRecommendedLoaded}
+              />
+            }
+          />
+          <Route path="/applications" element={<Applications />} />
+          <Route path="/applications/:appId" element={<Traceback />} />
+          <Route path="/stats" element={<Stats />} />
+          <Route path="/analytics" element={<MatchAnalytics />} />
+          <Route path="/health" element={<SystemHealth />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+        </Routes>
+      </main>
+
+      {showProfile && (
+        <ProfileModal
+          initialData={profile || undefined}
+          onClose={() => setShowProfile(false)}
+          onSave={handleSaveProfile}
+        />
+      )}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <AppContent />
+      </Router>
+    </QueryClientProvider>
   );
 }
 

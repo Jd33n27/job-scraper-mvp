@@ -3,17 +3,17 @@
   --font-sans: "Outfit", "Inter", sans-serif;
   --font-mono: "Fira Code", monospace;
   
-  --brand-cream: #FAF7F2;
-  --brand-forest: #1A3026;
-  --brand-sage: #E8EFE9;
-  --brand-panel-light: #F3EFE7;
-  --brand-terracotta: #C86A51;
-  --brand-terracotta-hover: #B4573F;
-  --brand-dark-text: #14221D;
-  --brand-muted-text: #4A5F56;
-  --brand-light-text: #F7F5F0;
-  --brand-border: #DCD5CB;
-  --brand-border-dark: #2A4237;
+  --brand-cream: #0f0d0c;
+  --brand-forest: #171514;
+  --brand-sage: #292523;
+  --brand-panel-light: #26201c;
+  --brand-terracotta: #d95f38;
+  --brand-terracotta-hover: #e8734d;
+  --brand-dark-text: #e4e0db;
+  --brand-muted-text: #ad9e92;
+  --brand-light-text: #f9f8f7;
+  --brand-border: #292523;
+  --brand-border-dark: #3f352e;
 }
 
 body {
@@ -65,20 +65,20 @@ body {
 }
 
 /* Input Fields (Clean & Flat) */
-input[type="text"], select, textarea {
+input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select, textarea {
   border: 1px solid var(--brand-border);
-  background: #ffffff;
-  color: var(--brand-dark-text);
+  background-color: #faf7f2;
+  color: #171514;
   padding: 8px 12px;
   font-family: var(--font-sans);
   font-size: 12px;
   border-radius: 8px;
   transition: all 0.2s ease;
 }
-input[type="text"]:focus, select:focus, textarea:focus {
+input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--brand-terracotta);
-  box-shadow: 0 0 0 2px rgba(200, 106, 81, 0.1);
+  box-shadow: 0 0 0 2px rgba(217, 95, 56, 0.15);
 }
 
 /* Checkbox */

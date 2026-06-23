@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { X, User, Mail, Phone, Save, Code, FileText } from "lucide-react";
-import { type UserProfile } from "../utils/profile";
+import type { UserProfile } from "../utils/profile";
 
 interface ProfileModalProps {
   onClose: () => void;
@@ -28,38 +28,37 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
-      <div className="bg-white w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-          <h3 className="text-xl font-bold text-gray-900">Your Profile</h3>
+    <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center z-[60] p-4">
+      <div className="bg-slate-900 border border-white/10 w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-white/10 flex justify-between items-center bg-white/5">
+          <h3 className="text-xl font-bold text-slate-100">Identity Config</h3>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-200 rounded-full transition-colors"
+            className="p-2 hover:bg-white/10 rounded-full transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5 text-slate-400 hover:text-slate-200" />
           </button>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="p-6 space-y-4 max-h-[80vh] overflow-y-auto"
+          className="p-6 space-y-4 max-h-[80vh] overflow-y-auto no-scrollbar"
         >
-          <p className="text-sm text-gray-500 mb-4">
-            This information will be used for AI matching and auto-filling
-            applications.
+          <p className="text-sm text-slate-400 mb-4">
+            This identity is injected into the AI matcher and auto-fill agents.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold uppercase text-gray-400 mb-1">
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
                 Full Name
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <input
                   type="text"
                   required
-                  className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all text-[#171514] placeholder-slate-500 font-medium"
                   placeholder="John Doe"
                   value={formData.name}
                   onChange={(e) =>
@@ -70,15 +69,15 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase text-gray-400 mb-1">
-                Email Address
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+                Email
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <input
                   type="email"
                   required
-                  className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                  className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all text-[#171514] placeholder-slate-500 font-medium"
                   placeholder="john@example.com"
                   value={formData.email}
                   onChange={(e) =>
@@ -90,15 +89,15 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase text-gray-400 mb-1">
-              Phone Number
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              Phone
             </label>
             <div className="relative">
-              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input
                 type="tel"
                 required
-                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all text-[#171514] placeholder-slate-500 font-medium"
                 placeholder="123-456-7890"
                 value={formData.phone}
                 onChange={(e) =>
@@ -109,14 +108,14 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase text-gray-400 mb-1">
-              Key Skills (Comma separated)
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              Skills (CSV)
             </label>
             <div className="relative">
-              <Code className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+              <Code className="absolute left-3 top-3 w-4 h-4 text-slate-500" />
               <textarea
-                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all min-h-[80px]"
-                placeholder="React, TypeScript, Go, PostgreSQL, AWS..."
+                className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all min-h-[80px] text-[#171514] placeholder-slate-500 resize-none font-medium"
+                placeholder="React, TypeScript, Go..."
                 value={formData.skills}
                 onChange={(e) =>
                   setFormData({ ...formData, skills: e.target.value })
@@ -126,14 +125,14 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase text-gray-400 mb-1">
-              Bio / Experience Summary
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+              Bio / Context
             </label>
             <div className="relative">
-              <FileText className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+              <FileText className="absolute left-3 top-3 w-4 h-4 text-slate-500" />
               <textarea
-                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all min-h-[120px]"
-                placeholder="Full-stack engineer with 5 years of experience building scalable web applications..."
+                className="w-full pl-10 pr-4 py-2 bg-[#faf7f2] border border-[#292523]/25 rounded-xl focus:border-cyan-500 outline-none transition-all min-h-[120px] text-[#171514] placeholder-slate-500 resize-none font-medium"
+                placeholder="Software engineer focused on scalable systems..."
                 value={formData.bio}
                 onChange={(e) =>
                   setFormData({ ...formData, bio: e.target.value })
@@ -146,16 +145,16 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2.5 rounded-xl font-bold text-gray-600 hover:bg-gray-100 transition-colors"
+              className="flex-1 px-4 py-2.5 rounded-xl font-bold text-slate-400 hover:text-slate-200 hover:bg-white/5 transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2.5 bg-blue-600 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all active:scale-95"
+              className="flex-1 px-4 py-2.5 bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all active:scale-95 cursor-pointer"
             >
               <Save className="w-4 h-4" />
-              Save Profile
+              Save Identity
             </button>
           </div>
         </form>

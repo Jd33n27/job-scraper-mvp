@@ -1,317 +1,224 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft,
-  User,
-  Mail,
-  Phone,
-  CheckCircle2,
+  Terminal,
+  Cpu,
+  AlertTriangle,
   Clock,
-  ShieldCheck,
-  FileText,
-  ExternalLink,
+  RefreshCw,
 } from "lucide-react";
-
-interface ApplicationTraceback {
-  id: number;
-  job_id: number;
-  status: string;
-  method: string;
-  applied_at: string;
-  job_title: string;
-  job_company: string;
-  job_url?: string;
-  submitted_data: {
-    name: string;
-    email: string;
-    phone: string;
-  };
-}
-
 import { API_BASE_URL } from "../config";
 
-const Traceback: React.FC = () => {
-  const { appId } = useParams();
-  const [data, setData] = useState<ApplicationTraceback | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [resolving, setResolving] = useState(false);
+interface LogEvent {
+  timestamp: string;
+  level: "info" | "warn" | "error" | string;
+  message: string;
+}
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/applications/${appId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
+interface TracebackDetails {
+  id: number;
+  job_title: string;
+  company: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+  logs?: LogEvent[] | string[] | null;
+}
+
+export default function Traceback() {
+  const { appId } = useParams<{ appId: string }>();
+  const [data, setData] = useState<TracebackDetails | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  const fetchTraceback = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/applications/${appId}`);
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error("Failed to fetch automation traceback logs:", error);
+    } finally {
+      setLoading(false);
+    }
   }, [appId]);
 
-  const handleResolve = async () => {
-    setResolving(true);
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/applications/${appId}/resolve`,
-        {
-          method: "PUT",
-        },
-      );
-      if (response.ok) {
-        // Refresh data
-        const res = await fetch(
-          `${API_BASE_URL}/applications/${appId}`,
-        );
-        const newData = await res.json();
-        setData(newData);
-      }
-    } catch (err) {
-      console.error("Failed to resolve application:", err);
-    } finally {
-      setResolving(false);
+  useEffect(() => {
+    fetchTraceback();
+  }, [fetchTraceback]);
+
+  const getStatusStyle = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case "submitted":
+      case "success":
+      case "completed":
+        return "bg-emerald-500/10 text-emerald-300 border-emerald-500/20";
+      case "failed":
+      case "error":
+        return "bg-rose-500/10 text-rose-300 border-rose-500/20";
+      default:
+        return "bg-violet-500/10 text-violet-300 border-violet-500/20";
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <Clock className="w-8 h-8 animate-spin text-blue-600" />
-      </div>
-    );
-  }
-
-  if (!data)
-    return <div className="p-8 text-center">Application not found.</div>;
-
   return (
-    <div className="h-full overflow-y-auto p-4 md:p-6">
-      <div className="max-w-4xl mx-auto">
-        <Link
-        to="/applications"
-        className="inline-flex items-center gap-2 text-gray-500 hover:text-blue-600 font-medium mb-6 transition-colors group"
-      >
-        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        Back to History
-      </Link>
+    <div className="h-full overflow-y-auto w-full flex justify-center bg-slate-950 text-slate-200">
+      {/* Central Timeline Container */}
+      <main className="w-full max-w-2xl border-x border-white/10 min-h-full bg-black/20 backdrop-blur-md flex flex-col">
+        {/* Navigation Sticky Header */}
+        <header className="sticky top-0 z-20 bg-slate-950/70 backdrop-blur-xl border-b border-white/10 p-5 flex items-center justify-between">
+          <Link
+            to="/applications"
+            className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-cyan-400 transition-colors group"
+          >
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
+            Back to Log
+          </Link>
 
-      {data.status === "manual_review" && (
-        <div className="mb-8 bg-amber-50 border-2 border-amber-200 rounded-3xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-lg shadow-amber-900/5">
-          <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center flex-shrink-0">
-              <Clock className="w-6 h-6 text-amber-600" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold text-amber-900">
-                Action Required: Manual Review
-              </h3>
-              <p className="text-amber-700 text-sm">
-                The automation couldn't complete this application. Please finish
-                it manually.
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-wrap gap-3 w-full md:w-auto">
-            {data.job_url && (
-              <a
-                href={data.job_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex-1 md:flex-none px-4 py-2.5 bg-amber-600 text-white rounded-xl text-sm font-bold flex items-center justify-center gap-2 hover:bg-amber-700 transition-all shadow-md active:scale-95 whitespace-nowrap"
-              >
-                Finish Manually
-                <ExternalLink className="w-4 h-4" />
-              </a>
-            )}
-            <button
-              onClick={handleResolve}
-              disabled={resolving}
-              className="flex-1 md:flex-none px-4 py-2.5 bg-white text-amber-600 border border-amber-200 rounded-xl text-sm font-bold hover:bg-amber-100 transition-all active:scale-95 disabled:opacity-50 whitespace-nowrap"
-            >
-              {resolving ? "Resolving..." : "Mark Resolved"}
-            </button>
-          </div>
-        </div>
-      )}
-      <div className="bg-white rounded-3xl shadow-xl shadow-blue-900/5 border border-gray-100 overflow-hidden">
-        {/* Header Section */}
-        <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 text-white">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="bg-white/20 backdrop-blur-md text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-white/30">
-                  Application Receipt
-                </span>
-                <span className="text-blue-100 text-sm font-medium">
-                  #{data.id}
-                </span>
-              </div>
-              <h1 className="text-3xl font-extrabold">{data.job_title}</h1>
-              <p className="text-blue-100 text-lg font-medium opacity-90">
-                {data.job_company}
-              </p>
-            </div>
-            <div className="flex flex-col items-end gap-2">
-              <div className="bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 flex items-center gap-2">
-                <Clock className="w-4 h-4" />
-                <span className="text-sm font-bold">
-                  {new Date(data.applied_at).toLocaleString()}
-                </span>
-              </div>
-              <span className="bg-green-400 text-green-950 text-[10px] font-black uppercase tracking-tighter px-3 py-1 rounded-full shadow-lg">
-                {data.status.replace("_", " ")}
+          <button
+            onClick={fetchTraceback}
+            disabled={loading}
+            className="p-2 bg-white/5 border border-white/10 rounded-xl text-slate-400 hover:text-slate-200 transition-all cursor-pointer"
+          >
+            <RefreshCw
+              className={`w-4 h-4 ${loading ? "animate-spin text-cyan-400" : ""}`}
+            />
+          </button>
+        </header>
+
+        {/* Content Container */}
+        <div className="flex flex-col flex-1">
+          {loading ? (
+            <div className="flex flex-col items-center justify-center h-64 gap-4">
+              <RefreshCw className="w-6 h-6 animate-spin text-cyan-400" />
+              <span className="text-sm font-medium text-slate-400">
+                Compiling engine telemetry...
               </span>
             </div>
-          </div>
-        </div>
-
-        <div className="p-8 space-y-12">
-          {/* Snapshot Section */}
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
-                <ShieldCheck className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">
-                  Submitted Snapshot
-                </h3>
-                <p className="text-sm text-gray-500">
-                  Exactly what we sent to the employer.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:border-blue-200 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <User className="w-5 h-5 text-blue-500" />
-                  <span className="text-xs font-black uppercase text-gray-400">
-                    Full Name
+          ) : data ? (
+            <div className="flex flex-col">
+              {/* Meta Section - Flat, Separated by Bottom Border */}
+              <div className="border-b border-white/10 p-6 bg-white/5 backdrop-blur-sm">
+                <div className="flex items-center justify-between mb-3">
+                  <span
+                    className={`px-2.5 py-0.5 rounded-full border text-[10px] font-bold uppercase tracking-wider ${getStatusStyle(data.status)}`}
+                  >
+                    {data.status}
+                  </span>
+                  <span className="text-[11px] font-medium text-slate-500">
+                    ID: #{data.id}
                   </span>
                 </div>
-                <p className="text-lg font-bold text-gray-800">
-                  {data.submitted_data?.name || "N/A"}
+
+                <h1 className="text-xl font-bold text-slate-100 leading-snug">
+                  {data.job_title}
+                </h1>
+                <p className="text-sm font-semibold text-slate-400 mt-1">
+                  {data.company}
                 </p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:border-blue-200 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <Mail className="w-5 h-5 text-blue-500" />
-                  <span className="text-xs font-black uppercase text-gray-400">
-                    Email Address
+
+                <div className="flex items-center gap-2 mt-4 text-[11px] font-mono text-slate-500">
+                  <Cpu className="w-3.5 h-3.5 text-violet-400" />
+                  <span>
+                    Initialized: {new Date(data.created_at).toLocaleString()}
                   </span>
                 </div>
-                <p
-                  className="text-lg font-bold text-gray-800 truncate"
-                  title={data.submitted_data?.email}
-                >
-                  {data.submitted_data?.email || "N/A"}
-                </p>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100 hover:border-blue-200 transition-colors">
-                <div className="flex items-center gap-3 mb-4">
-                  <Phone className="w-5 h-5 text-blue-500" />
-                  <span className="text-xs font-black uppercase text-gray-400">
-                    Phone Number
-                  </span>
-                </div>
-                <p className="text-lg font-bold text-gray-800">
-                  {data.submitted_data?.phone || "N/A"}
-                </p>
-              </div>
-            </div>
-          </section>
-
-          {/* Traceback Steps */}
-          <section>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
-                <FileText className="w-6 h-6 text-amber-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900">
-                  Application Traceback
-                </h3>
-                <p className="text-sm text-gray-500">
-                  The lifecycle of this specific application.
-                </p>
-              </div>
-            </div>
-
-            <div className="relative pl-8 space-y-12 before:absolute before:left-3 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-100">
-              {/* Step 1 */}
-              <div className="relative">
-                <div className="absolute -left-8 top-1.5 w-6 h-6 rounded-full bg-blue-100 border-4 border-white flex items-center justify-center shadow-sm">
-                  <CheckCircle2 className="w-3 h-3 text-blue-600" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900">
-                    Job Detected & Analyzed
-                  </h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    System matched requirements and confirmed compatibility for{" "}
-                    {data.method.replace("_", " ")}.
-                  </p>
-                  <div className="mt-3 inline-flex items-center gap-2 text-xs font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded">
-                    <Clock className="w-3 h-3" />
-                    {new Date(data.applied_at).toLocaleTimeString()}
-                  </div>
-                </div>
               </div>
 
-              {/* Step 2 */}
-              <div className="relative">
-                <div className="absolute -left-8 top-1.5 w-6 h-6 rounded-full bg-blue-100 border-4 border-white flex items-center justify-center shadow-sm">
-                  <CheckCircle2 className="w-3 h-3 text-blue-600" />
+              {/* Terminal Section - Flat Container Layout */}
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <Terminal className="w-4 h-4 text-cyan-400" />
+                  <h2 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+                    Agent Action Stream
+                  </h2>
                 </div>
-                <div>
-                  <h4 className="font-bold text-gray-900">
-                    Data Injection Completed
-                  </h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Automated script successfully located form fields and
-                    injected your profile data.
-                  </p>
-                </div>
-              </div>
 
-              {/* Step 3 */}
-              <div className="relative">
-                <div className="absolute -left-8 top-1.5 w-6 h-6 rounded-full bg-green-500 border-4 border-white flex items-center justify-center shadow-lg shadow-green-200">
-                  <CheckCircle2 className="w-3 h-3 text-white" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-gray-900">
-                    Final Confirmation
-                  </h4>
-                  <p className="text-sm text-gray-500 mt-1">
-                    Application was marked as{" "}
-                    <strong>{data.status.replace("_", " ")}</strong>.
-                  </p>
-                  {data.job_url && (
-                    <a
-                      href={data.job_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-4 inline-flex items-center gap-2 text-blue-600 font-bold text-sm hover:underline"
-                    >
-                      View Original Job Posting
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+                {/* Automation Log Terminal Wrapper */}
+                <div className="w-full bg-black/40 border border-white/10 rounded-xl p-4 font-mono text-xs text-slate-300 space-y-3 shadow-inner min-h-[300px]">
+                  {data.logs && data.logs.length > 0 ? (
+                    (data.logs as any[]).map((log, index) => {
+                      const isStructured =
+                        typeof log === "object" && log !== null;
+                      const msg = isStructured ? log.message : String(log);
+                      const stamp = isStructured ? log.timestamp : null;
+                      const level = isStructured
+                        ? String(log.level).toLowerCase()
+                        : "info";
+
+                      let levelColor = "text-cyan-400";
+                      let icon = "::";
+                      if (level === "error" || level === "failed") {
+                        levelColor = "text-rose-400";
+                        icon = "!!";
+                      } else if (level === "warn" || level === "warning") {
+                        levelColor = "text-amber-400";
+                        icon = "ww";
+                      }
+
+                      return (
+                        <div
+                          key={index}
+                          className="flex items-start gap-2.5 leading-relaxed tracking-normal border-b border-white/[0.03] pb-2 last:border-0 last:pb-0"
+                        >
+                          <span className="text-slate-600 shrink-0 select-none">
+                            {icon}
+                          </span>
+                          <div className="flex flex-col gap-0.5">
+                            {stamp && (
+                              <span className="text-[10px] text-slate-500">
+                                [{new Date(stamp).toLocaleTimeString()}]
+                              </span>
+                            )}
+                            <p className="text-slate-300">
+                              <span
+                                className={`font-bold mr-1.5 ${levelColor}`}
+                              >
+                                {level.toUpperCase()}
+                              </span>
+                              {msg}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-48 text-slate-500 gap-2">
+                      <Clock className="w-4 h-4 animate-pulse text-slate-600" />
+                      <span>
+                        Pipeline executing. Awaiting stdout buffer stream...
+                      </span>
+                    </div>
                   )}
                 </div>
               </div>
-            </div>
-          </section>
-        </div>
 
-        <div className="bg-gray-50 p-8 border-t border-gray-100 text-center">
-          <p className="text-gray-400 text-sm italic">
-            This is a permanent record of the application sent on{" "}
-            {new Date(data.applied_at).toLocaleDateString()}.
-          </p>
+              {/* Fatal Exception Fallback Banner */}
+              {data.status.toLowerCase() === "failed" && (
+                <div className="mx-6 p-4 bg-rose-500/5 border border-rose-500/10 rounded-xl flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
+                  <div>
+                    <h4 className="text-xs font-bold text-rose-300 uppercase tracking-wide">
+                      Automation Aborted
+                    </h4>
+                    <p className="text-xs text-rose-200/70 mt-1 leading-relaxed">
+                      The execution sequence context was interrupted. Check DOM
+                      targets or update structural parsing strategies.
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-64 text-center px-6">
+              <span className="text-sm font-medium text-slate-500">
+                Data pipeline entity record not found.
+              </span>
+            </div>
+          )}
         </div>
-      </div>
-      </div>
+      </main>
     </div>
   );
-};
-
-export default Traceback;
+}

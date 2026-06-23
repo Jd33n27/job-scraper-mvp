@@ -1,21 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Fira+Code:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-brand-cream: #FAF7F2;
-  --color-brand-forest: #1A3026;
-  --color-brand-sage: #E8EFE9;
-  --color-brand-panel-light: #F3EFE7;
-  --color-brand-terracotta: #C86A51;
-  --color-brand-terracotta-hover: #B4573F;
-  --color-brand-dark-text: #14221D;
-  --color-brand-muted-text: #4A5F56;
-  --color-brand-light-text: #F7F5F0;
-  --color-brand-border: #DCD5CB;
-  --color-brand-border-dark: #2A4237;
-  
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Outfit", "Inter", system-ui, sans-serif;
-  --font-mono: "Fira Code", monospace;
-  --radius-bento: 24px;
+  --color-cyan-50: #fdf5f2;
+  --color-cyan-100: #fbeae5;
+  --color-cyan-200: #f7d5cc;
+  --color-cyan-300: #eeb5a3;
+  --color-cyan-400: #e28a6f;
+  --color-cyan-500: #d95f38; /* Terracotta Rust */
+  --color-cyan-600: #c74823;
+  --color-cyan-700: #a5371a;
+  --color-cyan-800: #892f17;
+  --color-cyan-900: #722b17;
+  --color-cyan-950: #3e1309;
+
+  --color-slate-50: #f9f8f7;
+  --color-slate-100: #f3f1ee;
+  --color-slate-200: #e4e0db; /* Stone gray text */
+  --color-slate-300: #cdc6bf;
+  --color-slate-400: #ad9e92;
+  --color-slate-500: #8d7e72;
+  --color-slate-600: #716257;
+  --color-slate-700: #584c43;
+  --color-slate-800: #3f352e;
+  --color-slate-900: #26201c;
+  --color-slate-950: #0f0d0c; /* Warm Obsidian background */
+
+  --color-violet-400: #ecb27a; /* Amber Gold secondary */
+  --color-violet-500: #e3a054;
+}
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-200 antialiased selection:bg-cyan-500/30;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Sleek, minimal scrollbar for the dark UI */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Hide scrollbar for clean feeds if desired, but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

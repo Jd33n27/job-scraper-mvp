@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   ScatterChart,
   Scatter,
@@ -15,68 +16,55 @@ import { BarChart3, TrendingUp } from "lucide-react";
 import { API_BASE_URL } from "../config";
 
 const MatchAnalytics: React.FC = () => {
-  const [data, setData] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await fetch(
-          `${API_BASE_URL}/stats/matching`,
-        );
-        const matchData = await response.json();
-
-        // Fetch general stats for salary info
-        await fetch(`${API_BASE_URL}/stats`);
-
-        // Fetch recommended jobs for scatter data
-        const jobsResponse = await fetch(
-          `${API_BASE_URL}/jobs/recommended`,
-        );
-        const jobs = await jobsResponse.json();
-
-        if (jobsResponse.status === 404 || jobs.error) {
-          setData({
-            distribution: matchData.score_distribution,
-            scatter: [],
-            averageSalary: 0,
-            medianSalary: 0,
-            salaryData: [],
-          });
-          return;
-        }
-
-        const scatterData = jobs
-          .filter((j: any) => j.salary_min && j.match.score > 0)
-          .map((j: any) => ({
-            name: j.title,
-            score: j.match.score,
-            salary: j.salary_min / 1000,
-            company: j.company,
-          }));
-
-        setData({
-          distribution: matchData.score_distribution,
-          scatter: scatterData,
-          averageSalary: 85000, // Mocked for demo
-          medianSalary: 78000, // Mocked for demo
-          salaryData: [
-            { range: "<40k", count: 5 },
-            { range: "40-70k", count: 15 },
-            { range: "70-100k", count: 25 },
-            { range: "100-130k", count: 10 },
-            { range: ">130k", count: 4 },
-          ],
-        });
-      } catch (error) {
-        console.error("Error fetching analytics:", error);
-      } finally {
-        setLoading(false);
+  const { data, isLoading: loading } = useQuery({
+    queryKey: ["matchAnalytics"],
+    queryFn: async () => {
+      const response = await fetch(`${API_BASE_URL}/stats/matching`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch matching stats");
       }
-    };
+      const matchData = await response.json();
 
-    fetchStats();
-  }, []);
+      const jobsResponse = await fetch(`${API_BASE_URL}/jobs/recommended`);
+      if (!jobsResponse.ok) {
+        throw new Error("Failed to fetch recommended jobs");
+      }
+      const jobs = await jobsResponse.json();
+
+      if (jobsResponse.status === 404 || jobs.error || !Array.isArray(jobs)) {
+        return {
+          distribution: matchData.score_distribution,
+          scatter: [],
+          averageSalary: 0,
+          medianSalary: 0,
+          salaryData: [],
+        };
+      }
+
+      const scatterData = jobs
+        .filter((j: any) => j.salary_min && j.match && j.match.score > 0)
+        .map((j: any) => ({
+          name: j.title,
+          score: j.match.score,
+          salary: j.salary_min / 1000,
+          company: j.company,
+        }));
+
+      return {
+        distribution: matchData.score_distribution,
+        scatter: scatterData,
+        averageSalary: 85000, // Mocked for demo
+        medianSalary: 78000, // Mocked for demo
+        salaryData: [
+          { range: "<40k", count: 5 },
+          { range: "40-70k", count: 15 },
+          { range: "70-100k", count: 25 },
+          { range: "100-130k", count: 10 },
+          { range: ">130k", count: 4 },
+        ],
+      };
+    },
+  });
 
   if (loading || !data) return null;
 
